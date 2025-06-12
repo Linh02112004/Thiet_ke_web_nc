@@ -15,7 +15,11 @@ class OrganizationController extends Controller
         $eventsOngoing = Event::where('organization_id', $orgId)->where('status', 'ongoing')->get();
         $eventsCompleted = Event::where('organization_id', $orgId)->where('status', 'completed')->get();
 
-        return view('organization.index', compact('eventsOngoing', 'eventsCompleted'));
+        return view('organization.index', [
+            'ongoingEvents' => $eventsOngoing,
+            'completedEvents' => $eventsCompleted
+        ]);
+
     }
 
     public function showEvent($id)
