@@ -3,7 +3,7 @@
     <div class="modal-content">
         <span class="close" onclick="closeModal('loginModal')">&times;</span>
         <h2>Đăng nhập</h2>
-        <form action="{{ route('login') }}" method="POST">
+        <form method="POST" action="{{ route('login.post') }}">
             @csrf
             <select name="loginRole" id="loginRole" onchange="updateLoginFields()">
                 <option value="admin">Quản trị viên</option>

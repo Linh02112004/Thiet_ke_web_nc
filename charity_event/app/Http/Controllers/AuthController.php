@@ -52,7 +52,7 @@ class AuthController extends Controller
                     ->first();
 
         if ($user && Hash::check($request->loginPassword, $user->password)) {
-            Auth::login($user);
+            Auth::guard('web')->login($user);
             \Log::info('Logged in: '.$user->email.' as '.$user->role);
 
             switch ($user->role) {
