@@ -1,0 +1,670 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #f8fcfc;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    position: relative;
+}
+
+header+main {
+    padding-top: 10px;
+}
+
+header h1 {
+    font-size: 40px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: #007bff;
+    margin: 0;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: inherit;
+}
+
+header h1 a:hover {
+    color: inherit;
+}
+
+/* Container bên phải */
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.auth-buttons a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    background: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.auth-buttons a:hover {
+    color: #ff6600;
+}
+
+#userMenu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    /* Đặt làm gốc cho dropdown */
+}
+
+.arrow {
+    margin-left: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    /* Luôn nằm ngay bên dưới */
+    left: 0;
+    /* Căn lề trái so với userMenu */
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    min-width: 180px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#userMenu:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-content a:hover {
+    text-decoration: underline;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+    background: white;
+}
+
+main h1 {
+    text-align: center;
+    width: 100%;
+    font-size: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #007bff;
+    margin: 0;
+}
+
+/* Định dạng div chứa ô tìm kiếm */
+#searchBoxContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#searchBox {
+    width: 600px;
+    padding: 12px 12px 12px 40px;
+    /* Tạo khoảng trống bên trái cho icon */
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    outline: none;
+    font-size: 16px;
+    background: url('https://cdn-icons-png.flaticon.com/16/149/149852.png') no-repeat 12px center;
+    background-size: 18px;
+}
+
+#searchBox::placeholder {
+    color: #888;
+}
+
+/* Nút tìm kiếm */
+#searchButton {
+    padding: 12px 18px;
+    margin-left: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#searchButton:hover {
+    background-color: #0056b3;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
+}
+
+form label {
+    margin: 10px 0 5px;
+}
+
+form input,
+form textarea,
+form select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Danh sách sự kiện */
+.events-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.event-card {
+    width: 25%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.event-card:hover {
+    transform: scale(1.05);
+}
+
+.event-card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.event-card p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.event-card button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background: #4caf50;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.event-card button:hover {
+    background: #45a049;
+}
+
+.event-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Giới hạn 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    /* Giữ nguyên định dạng xuống dòng */
+    max-height: 3.2em;
+    /* Tùy chỉnh theo font-size */
+    line-height: 1.6em;
+}
+
+.donate-button {
+    display: block;
+    width: 50%;
+    margin: 10px auto 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.donate-button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer luôn cố định dưới cùng */
+footer {
+    background-color: #f8fcfc;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    margin-top: auto;
+    /* Quan trọng: Đẩy footer xuống đáy */
+}
+
+.footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.footer-container h1 {
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-copyright {
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .home-link-container a,
+    .auth-buttons a {
+        display: block;
+        text-align: center;
+        margin: 5px 0;
+    }
+}
+
+.container {
+    width: 100%;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 30px;
+}
+
+/* Container Left */
+.container-left {
+    width: 70%;
+}
+
+.comment-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+#commentText {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    padding-right: 40px;
+    /* Chừa khoảng trống bên phải cho nút gửi */
+}
+
+.comment-box button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 8%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comment-box button:hover {
+    background-color: #0056b3;
+}
+
+#commentSection ul {
+    list-style: none;
+    /* Loại bỏ dấu chấm */
+    padding: 0;
+    /* Xóa padding mặc định */
+}
+
+#commentSection li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    /* Đường kẻ ngăn cách giữa các bình luận */
+}
+
+#commentSection li:last-child {
+    border-bottom: none;
+    /* Loại bỏ đường kẻ cuối cùng */
+}
+
+#commentSection strong {
+    color: #333;
+    font-weight: bold;
+}
+
+#commentSection small {
+    color: #777;
+    font-size: 12px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+/* Container Right */
+.container-right {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Right Top */
+.right-top {
+    background-color: #8cc9e7;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+}
+
+.progress-bar {
+    width: 100%;
+    background: #ddd;
+    height: 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    background: rgb(29, 194, 0);
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+/* Right Bottom */
+.right-bottom {
+    background: #c1f2ff;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.right-bottom table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.right-bottom table th,
+.right-bottom table td {
+    background: #fff;
+    border: 1.5px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+.right-bottom table td {
+    font-size: 12px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Nút đóng pop-up */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #ff6600;
+}
+
+.modal input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.qr-container {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    margin-top: 15px;
+    width: 100%;
+    /* Đảm bảo container rộng bằng modal */
+}
+
+.qr-container img {
+    max-width: 80%;
+    height: auto;
+    border-radius: 5px;
+}
+
+#updateInfoModal,
+#changePasswordModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#updateInfoModal .modal-content,
+#changePasswordModal .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#changePasswordModal .modal-content {
+    max-width: 400px;
+}
+
+#updateInfoModal h1,
+#changePasswordModal h1 {
+    color: #007BFF;
+    margin-bottom: 15px;
+}
+
+#updateInfoModal .form-container,
+#changePasswordModal .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+#updateInfoModal label,
+#changePasswordModal label {
+    font-weight: bold;
+}
+
+#updateInfoModal input,
+#changePasswordModal input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#updateInfoModal button,
+#changePasswordModal button {
+    width: fit-content;
+    padding: 10px;
+    margin: 15px auto 0;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s;
+    display: block;
+}
+
+#updateInfoModal button:hover,
+#changePasswordModal button:hover {
+    background-color: #0056b3;
+}
+
+#updateInfoModal .close,
+#changePasswordModal .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    transition: color 0.3s;
+}
+
+#updateInfoModal .close:hover,
+#changePasswordModal .close:hover {
+    color: #ff6600;
+}

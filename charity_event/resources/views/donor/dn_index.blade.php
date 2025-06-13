@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌱 HY VỌNG - Người quyên góp</title>
-    <link rel="stylesheet" href="style/donor.css">
+    <link rel="stylesheet" href="{{ asset('css/donor.css') }}">
 </head>
 <body>
     <header>
