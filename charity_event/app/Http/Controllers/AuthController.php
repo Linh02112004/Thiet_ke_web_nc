@@ -25,12 +25,12 @@ class AuthController extends Controller
         $user = new User();
         $user->id = (string) Str::uuid();
         $user->email = $request->registerEmail;
-        $user->password = Hash::make($request->registerPassword);
+        $user->password_hash = Hash::make($request->registerPassword); // dùng đúng cột `password_hash`
         $user->role = $request->registerRole;
 
         if ($request->registerRole === 'organization') {
             $user->organization_name = $request->orgName;
-        } else {
+        } elseif ($request->registerRole === 'donor') {
             $user->full_name = $request->fullName;
             $user->phone = $request->phone;
         }
