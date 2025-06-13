@@ -10,4 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCancelCreate.addEventListener('click', () => {
         modalCreateEvent.classList.add('hidden');
     });
+
+    function openUpdateModal() {
+        document.getElementById('updateInfoModal').style.display = 'block';
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+    }
 });

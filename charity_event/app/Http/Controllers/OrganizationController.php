@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class OrganizationController extends Controller
@@ -11,15 +12,16 @@ class OrganizationController extends Controller
     public function index()
     {
         $orgId = Auth::id();
-        // Lấy các event của tổ chức đang đăng nhập, phân loại theo trạng thái
+        $user = Auth::user();
+
         $eventsOngoing = Event::where('organization_id', $orgId)->where('status', 'ongoing')->get();
         $eventsCompleted = Event::where('organization_id', $orgId)->where('status', 'completed')->get();
 
         return view('organization.org_index', [
             'ongoingEvents' => $eventsOngoing,
-            'completedEvents' => $eventsCompleted
+            'completedEvents' => $eventsCompleted,
+            'user' => $user
         ]);
-
     }
 
     public function showEvent($id)
@@ -46,5 +48,30 @@ class OrganizationController extends Controller
         $event->delete();
 
         return redirect()->route('organization.org_index')->with('success', 'Xóa sự kiện thành công');
+    }
+
+    public function editInfo()
+    {
+        $user = Auth::user();
+        return view('organization.modals.update-info', compact('user'));
+    }
+
+    public function updateInfo(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'organization_name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'address' => 'nullable|string|max:255',
+            'website' => 'nullable|url',
+            'social_media' => 'nullable|url',
+        ]);
+
+        $user->update($validated);
+
+        return redirect()->route('organization.org_index')->with('success', 'Thông tin tổ chức đã được cập nhật.');
     }
 }
