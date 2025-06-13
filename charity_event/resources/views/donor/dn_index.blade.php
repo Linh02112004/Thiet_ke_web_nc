@@ -8,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1><a id="homeLink" href="donor.php">🌱 HY VỌNG</a></h1>
+        <h1><a id="homeLink" href="donor.dn_index">🌱 HY VỌNG</a></h1>
         <div class="header-right">
             <div id="userMenu">
                 <span id="userName">Xin chào, <?php echo $full_name; ?></span>
@@ -74,7 +74,7 @@
                             <?php echo $progress; ?>%
                             </div>
                         </div>
-                        <button onclick="window.location.href='dn_eventDetails.php?id=<?php echo $event['event_id']; ?>'">Quyên góp</button>
+                        <button onclick="window.location.href='#?id=<?php echo $event['event_id']; ?>'">Quyên góp</button>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

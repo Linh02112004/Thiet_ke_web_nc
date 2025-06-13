@@ -15,7 +15,7 @@ class OrganizationController extends Controller
         $eventsOngoing = Event::where('organization_id', $orgId)->where('status', 'ongoing')->get();
         $eventsCompleted = Event::where('organization_id', $orgId)->where('status', 'completed')->get();
 
-        return view('organization.index', [
+        return view('organization.org_index', [
             'ongoingEvents' => $eventsOngoing,
             'completedEvents' => $eventsCompleted
         ]);
@@ -45,6 +45,6 @@ class OrganizationController extends Controller
         $this->authorize('delete', $event);
         $event->delete();
 
-        return redirect()->route('organization.dashboard')->with('success', 'Xóa sự kiện thành công');
+        return redirect()->route('organization.org_index')->with('success', 'Xóa sự kiện thành công');
     }
 }

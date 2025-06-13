@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -53,15 +53,15 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->loginPassword, $user->password)) {
             Auth::guard('web')->login($user);
-            \Log::info('Logged in: '.$user->email.' as '.$user->role);
+            Log::info('Logged in: '.$user->email.' as '.$user->role);
 
             switch ($user->role) {
                 case 'admin': 
-                    return redirect()->route('admin.dashboard');
+                    return redirect()->route('admin.ad_index');
                 case 'organization': 
-                    return redirect()->route('organization.index');
+                    return redirect()->route('organization.org_index');
                 case 'donor': 
-                    return redirect()->route('donor.dashboard');
+                    return redirect()->route('donor.dn_index');
             }
         }
 

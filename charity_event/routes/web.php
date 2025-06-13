@@ -49,7 +49,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', RoleMiddleware::class . ':donor'])
     ->prefix('donor')
     ->group(function () {
-        Route::get('/', [DonorController::class, 'index'])->name('donor.dashboard');
+        Route::get('/', [DonorController::class, 'index'])->name('donor.dn_index');
         Route::post('/update-info', [DonorController::class, 'updateInfo'])->name('donor.updateInfo');
         Route::post('/change-password', [DonorController::class, 'changePassword'])->name('donor.changePassword');
     });
@@ -58,7 +58,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':donor'])
 Route::middleware(['auth', RoleMiddleware::class . ':organization'])
     ->prefix('organization')
     ->group(function () {
-        Route::get('/index', [OrganizationController::class, 'index'])->name('organization.index');
+        Route::get('/index', [OrganizationController::class, 'index'])->name('organization.org_index');
         Route::get('/event/{id}', [OrganizationController::class, 'showEvent'])->name('organization.event.details');
         Route::get('/event/{id}/request-edit', [OrganizationController::class, 'requestEdit'])->name('organization.requestEdit');
         Route::delete('/event/{id}', [OrganizationController::class, 'deleteEvent'])->name('organization.event.delete');
@@ -68,5 +68,5 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])
     ->prefix('admin')
     ->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/', [AdminController::class, 'index'])->name('admin.ad_index');
     });
