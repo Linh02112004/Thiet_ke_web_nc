@@ -105,9 +105,9 @@ h2 {
     margin-bottom: 10px;
 }
 
-p,
-ul {
+p,ul {
     margin-bottom: 15px;
+    color:#333;
 }
 
 ul li {
@@ -250,4 +250,268 @@ footer {
 
 .modal button:hover {
     background-color: #0056b3;
+}
+.slideshow-hero {
+    position: relative;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 40px;
+}
+
+/* Lớp phủ làm mờ ảnh nền */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* điều chỉnh độ mờ tại đây */
+    z-index: 1;
+}
+
+/* Nội dung nằm trên lớp overlay */
+.overlay-content {
+    position: relative;
+    z-index: 2; /* Quan trọng: giúp chữ nổi trên ảnh mờ */
+    color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    max-width: 800px;
+    background-color: transparent; /* Không bị mờ */
+}
+
+.overlay-content h1 {
+    font-size: 32px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.overlay-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color:#ccc;
+}
+.how-it-works {
+    background-color: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 26px;
+    margin-bottom: 40px;
+    color: #111;
+    font-weight: bold;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.step {
+    max-width: 250px;
+    text-align: center;
+    padding: 20px;
+}
+
+.icon-circle {
+    background-color: #dcfce7;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.icon-circle i {
+    font-size: 28px;
+    color: #044878;
+}
+
+.step h3 {
+    font-size: 18px;
+    color: #111;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.step p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .steps {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+}
+/* === Phần thống kê sự kiện từ thiện === */
+.stats-section {
+    padding: 60px 20px;
+    background: #fff;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; /* hoặc nowrap tùy nếu muốn cố định 2 cột */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* Bên trái: mô tả */
+.stats-text {
+    flex: 1 1 45%;
+}
+
+.stats-subtitle {
+    color: #1d4ed8;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.stats-text h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #111;
+}
+
+.stats-description {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+.stats-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #222;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.stats-button:hover {
+    background-color: #000;
+}
+
+/* Bên phải: các thẻ card số liệu */
+.stats-cards {
+    flex: 1 1 45%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Card chung */
+.stat-card {
+    width:200px;
+    height: 200px;
+    border-radius: 20px;
+    color: #fff;
+    padding: 20px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .card-label {
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.stat-card .card-value {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Các màu & vị trí */
+.yellow-card {
+    background-color: #fbbf24;
+    top: 0;
+    right: 30px;
+    z-index: 1;
+}
+
+.green-card {
+    background-color: #4b8a4e;
+    top: 100px;
+    right: 100px;
+    z-index: 2;
+}
+
+.blue-card {
+    background-color: #2563eb;
+    top: 160px;
+    right: 0;
+    z-index: 3;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Vòng tròn tỷ lệ người ủng hộ */
+.circle-chart {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: conic-gradient(#facc15 0% 93%, #1e40af 93% 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stats-cards {
+        margin-top: 40px;
+        position: relative;
+        height: 350px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .stat-card {
+        position: absolute;
+    }
 }
