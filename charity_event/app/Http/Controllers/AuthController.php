@@ -25,7 +25,7 @@ class AuthController extends Controller
         $user = new User();
         $user->id = (string) Str::uuid();
         $user->email = $request->registerEmail;
-        $user->password_hash = Hash::make($request->registerPassword); // dùng đúng cột `password_hash`
+        $user->password_hash = Hash::make($request->registerPassword); 
         $user->role = $request->registerRole;
 
         if ($request->registerRole === 'organization') {
@@ -51,7 +51,7 @@ class AuthController extends Controller
                     ->orWhere('phone', $request->loginIdentity)
                     ->first();
 
-        if ($user && Hash::check($request->loginPassword, $user->password)) {
+        if ($user && Hash::check($request->loginPassword, $user->password_hash)) {
             Auth::guard('web')->login($user);
             Log::info('Logged in: '.$user->email.' as '.$user->role);
 
@@ -66,5 +66,14 @@ class AuthController extends Controller
         }
 
         return back()->with('error', 'Đăng nhập thất bại!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate(); // Xóa session hiện tại
+        $request->session()->regenerateToken(); // Tạo CSRF token mới
+
+        return redirect('/')->with('success', 'Đăng xuất thành công!');
     }
 }

@@ -15,7 +15,12 @@
             <div class="dropdown-content">
                 <a href="#" onclick="document.getElementById('updateInfoModal').style.display='block'">Cập nhật thông tin</a>
                 <a href="#" onclick="document.getElementById('changePasswordModal').style.display='block'">Thay đổi mật khẩu</a>
-                <a href="{{ route('logout') }}">Đăng xuất</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+                    Đăng xuất
+                </a>
+                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
     </div>
