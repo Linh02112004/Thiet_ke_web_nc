@@ -49,7 +49,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', RoleMiddleware::class . ':donor'])
     ->prefix('donor')
     ->group(function () {
-        Route::get('/', [DonorController::class, 'index'])->name('donor.dn_index');
+        Route::get('/index', [DonorController::class, 'index'])->name('donor.dn_index');
         Route::post('/update-info', [DonorController::class, 'updateInfo'])->name('donor.updateInfo');
         Route::post('/change-password', [DonorController::class, 'changePassword'])->name('donor.changePassword');
     });
@@ -65,6 +65,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
         Route::middleware(['auth'])->prefix('organization')->group(function () {
             Route::post('/organization/update-info', [OrganizationController::class, 'updateInfo'])->name('organization.updateInfo');
             Route::post('/organization/change-password', [OrganizationController::class, 'changePassword'])->name('organization.changePassword');
+            Route::post('/organization/create-event', [OrganizationController::class, 'createEvent'])->name('organization.createEvent');
         });
     });
 
@@ -72,5 +73,5 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])
     ->prefix('admin')
     ->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('admin.ad_index');
+        Route::get('/index', [AdminController::class, 'index'])->name('admin.ad_index');
     });

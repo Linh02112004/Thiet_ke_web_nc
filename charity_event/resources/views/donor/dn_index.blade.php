@@ -8,15 +8,20 @@
 </head>
 <body>
     <header>
-        <h1><a id="homeLink" href="donor.dn_index">🌱 HY VỌNG</a></h1>
+        <h1><a href="{{ route('donor.dn_index') }}">🌱 HY VỌNG</a></h1>
         <div class="header-right">
             <div id="userMenu">
-                <span id="userName">Xin chào, <?php echo $full_name; ?></span>
+                <span id="userName">Xin chào, {{ Auth::user()->full_name }}</span>
                 <span id="arrowDown" class="arrow">▼</span>
                 <div id="dropdown" class="dropdown-content">
                     <a id="updateInfoLink" href="#">Cập nhật thông tin</a>
                     <a id="changePasswordLink" href="#">Thay đổi mật khẩu</a>
-                    <a href="logout.php">Đăng xuất</a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+                    Đăng xuất
+                    </a>
+                    <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

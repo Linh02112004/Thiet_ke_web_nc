@@ -3,7 +3,8 @@
         <div class="modal-content">
         <span class="close" onclick="closeModal('create_eventModal')">&times;</span>
             <h1>Tạo sự kiện</h1>
-            <form action="or_saveEvents.php" method="POST">
+            <form action="{{ route('organization.createEvent') }}" method="POST">
+                @csrf
                 <div class="form-container">
                     <!-- Thông tin Sự kiện -->
                     <div class="form-section">

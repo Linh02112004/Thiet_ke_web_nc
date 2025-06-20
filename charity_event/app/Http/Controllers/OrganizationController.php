@@ -15,8 +15,8 @@ class OrganizationController extends Controller
         $orgId = Auth::id();
         $user = Auth::user();
 
-        $eventsOngoing = Event::where('organization_id', $orgId)->where('status', 'ongoing')->get();
-        $eventsCompleted = Event::where('organization_id', $orgId)->where('status', 'completed')->get();
+        $eventsOngoing = Event::where('user_id', $orgId)->where('status', 'ongoing')->get();
+        $eventsCompleted = Event::where('user_id', $orgId)->where('status', 'completed')->get();
 
         return view('organization.org_index', [
             'ongoingEvents' => $eventsOngoing,
@@ -93,5 +93,40 @@ class OrganizationController extends Controller
         $user->save();
 
         return back()->with('success', 'Mật khẩu đã được thay đổi.');
+    }
+
+    public function createEvent(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->role !== 'organization') {
+            abort(403, 'Bạn không có quyền thực hiện hành động này.');
+        }
+
+        $validated = $request->validate([
+            'event_name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'goal' => 'required|numeric|min:1',
+            'description' => 'required|string',
+            'organizer_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'bank_account' => 'required|string|max:50',
+            'bank_name' => 'required|string|max:100',
+        ]);
+
+        Event::create([
+            'user_id' => $user->id,
+            'event_name' => $validated['event_name'],
+            'location' => $validated['location'],
+            'goal' => $validated['goal'],
+            'description' => $validated['description'],
+            'organizer_name' => $validated['organizer_name'],
+            'phone' => $validated['phone'],
+            'bank_account' => $validated['bank_account'],
+            'bank_name' => $validated['bank_name'],
+            'status' => 'ongoing',
+        ]);
+
+        return redirect()->route('organization.org_index')->with('success', 'Sự kiện đã được tạo thành công.');
     }
 }
