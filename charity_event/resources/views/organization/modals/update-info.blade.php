@@ -9,11 +9,11 @@
                     <label for="organization_name">Tên tổ chức:</label>
                     <input type="text" id="organization_name" name="organization_name" value="{{ old('organization_name', $user->organization_name) }}" required>
 
-                    <label for="full_name">Tên người đại diện:</label>
-                    <input type="text" id="full_name" name="full_name" value="{{ old('full_name', $user->full_name) }}" required>
+                    <label for="description">Mô tả tổ chức:</label>
+                    <textarea id="description" name="description" rows="3">{{ old('description', $user->description) }}</textarea>
 
                     <label for="phone">Số điện thoại liên hệ:</label>
-                    <input type="tel" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
+                    <input type="tel" id="phone" name="phone" value="{{ old('phone', $user->phone) }}">
 
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required>

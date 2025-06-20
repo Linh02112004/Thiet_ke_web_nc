@@ -62,12 +62,12 @@ class OrganizationController extends Controller
 
         $validated = $request->validate([
             'organization_name' => 'required|string|max:255',
-            'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'description' => 'nullable|string|max:1000',
+            'phone' => 'nullable|string|max:20|unique:users,phone,' . $user->id,
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'address' => 'nullable|string|max:255',
-            'website' => 'nullable|url',
-            'social_media' => 'nullable|url',
+            'website' => 'nullable|url|max:255',
+            'social_media' => 'nullable|url|max:255',
         ]);
 
         $user->update($validated);
