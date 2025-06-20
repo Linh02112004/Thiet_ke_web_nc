@@ -40,22 +40,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Xử lý modal tạo sự kiện
-    const create_eventModal = document.getElementById("create_eventModal");
+    const createEventModal = document.getElementById("createEventModal");
     const createEventButton = document.getElementById("createEventButton");
-    const closeButton = create_eventModal.querySelector(".close");
+    const closeCreateEvent = createEventModal.querySelector(".close");
 
     createEventButton.addEventListener("click", function (event) {
         event.preventDefault();
-        create_eventModal.style.display = "block";
+        createEventModal.style.display = "block";
     });
 
-    closeButton.addEventListener("click", function () {
-        create_eventModal.style.display = "none";
+    closeCreateEvent.addEventListener("click", function () {
+        createEventModal.style.display = "none";
     });
 
     window.addEventListener("click", function (event) {
-        if (event.target === create_eventModal) {
-            create_eventModal.style.display = "none";
+        if (event.target === createEventModal) {
+            createEventModal.style.display = "none";
         }
     });
 
@@ -116,3 +116,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+console.log("JS loaded ✅");

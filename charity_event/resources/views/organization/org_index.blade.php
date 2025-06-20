@@ -13,8 +13,8 @@
         <div id="userMenu">
             <span>Xin chào, Tổ chức {{ Auth::user()->organization_name }}</span>
             <div class="dropdown-content">
-                <a href="#" onclick="document.getElementById('updateInfoModal').style.display='block'">Cập nhật thông tin</a>
-                <a href="#" onclick="document.getElementById('changePasswordModal').style.display='block'">Thay đổi mật khẩu</a>
+                <a href="#" id="updateInfoLink">Cập nhật thông tin</a>
+                <a href="#" id="changePasswordLink">Thay đổi mật khẩu</a> 
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                     Đăng xuất
                 </a>
@@ -28,7 +28,9 @@
 
 <main>
     <div class="text-right mb-4">
-        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded" onclick="document.getElementById('createEventModal').style.display='block'">Tạo sự kiện mới</button>
+        <button id="createEventButton" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+            Tạo sự kiện mới
+        </button>
     </div>
 
     <h2 class="text-2xl font-bold text-center mb-4">DANH SÁCH SỰ KIỆN</h2>
@@ -36,7 +38,7 @@
     <h3 class="text-xl font-semibold mb-2">Sự kiện đang diễn ra</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         @forelse ($ongoingEvents as $event)
-            @include('organization.partials.event-card', ['event' => $event])
+            @include('organization.modals.event-card', ['event' => $event])
         @empty
             <p>Không có sự kiện nào.</p>
         @endforelse
@@ -45,7 +47,7 @@
     <h3 class="text-xl font-semibold mb-2">Sự kiện đã hoàn thành</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @forelse ($completedEvents as $event)
-            @include('organization.partials.event-card', ['event' => $event])
+            @include('organization.modals.event-card', ['event' => $event])
         @empty
             <p>Không có sự kiện nào.</p>
         @endforelse

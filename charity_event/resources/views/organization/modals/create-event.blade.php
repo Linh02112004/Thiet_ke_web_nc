@@ -1,7 +1,7 @@
 <!-- Pop-up Tạo sự kiện -->
-    <div id="create_eventModal" class="modal" style="display: none;">
+    <div id="createEventModal" class="modal" style="display: none;">
         <div class="modal-content">
-        <span class="close" onclick="closeModal('create_eventModal')">&times;</span>
+        <span class="close">&times;</span>
             <h1>Tạo sự kiện</h1>
             <form action="{{ route('organization.createEvent') }}" method="POST">
                 @csrf
