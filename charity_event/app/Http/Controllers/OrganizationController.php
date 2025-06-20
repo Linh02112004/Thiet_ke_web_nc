@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class OrganizationController extends Controller
 {
@@ -73,5 +74,24 @@ class OrganizationController extends Controller
         $user->update($validated);
 
         return redirect()->route('organization.org_index')->with('success', 'Thông tin tổ chức đã được cập nhật.');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed', // Laravel yêu cầu trường xác nhận phải là `new_password_confirmation`
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password_hash)) {
+            return back()->with('error', 'Mật khẩu hiện tại không đúng.');
+        }
+
+        $user->password_hash = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Mật khẩu đã được thay đổi.');
     }
 }

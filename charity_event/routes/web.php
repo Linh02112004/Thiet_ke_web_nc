@@ -63,9 +63,9 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
         Route::get('/event/{id}/request-edit', [OrganizationController::class, 'requestEdit'])->name('organization.requestEdit');
         Route::delete('/event/{id}', [OrganizationController::class, 'deleteEvent'])->name('organization.event.delete');
         Route::middleware(['auth'])->prefix('organization')->group(function () {
-        Route::post('/update-info', [OrganizationController::class, 'updateInfo'])->name('organization.updateInfo');
-});
-
+            Route::post('/organization/update-info', [OrganizationController::class, 'updateInfo'])->name('organization.updateInfo');
+            Route::post('/organization/change-password', [OrganizationController::class, 'changePassword'])->name('organization.changePassword');
+        });
     });
 
 // Các route cho admin

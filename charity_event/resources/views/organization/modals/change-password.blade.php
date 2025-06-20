@@ -1,9 +1,9 @@
-<!-- Pop-up Thay đổi mật khẩu -->
     <div id="changePasswordModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal('changePasswordModal')">&times;</span>
             <h1>Thay đổi mật khẩu</h1>
-            <form action="changePassword.php" method="POST">
+            <form action="{{ route('organization.changePassword') }}" method="POST">
+                @csrf
                 <div class="form-container">
                     <!-- Mật khẩu -->
                     <div class="form-section">
@@ -14,7 +14,8 @@
                         <input type="password" id="new_password" name="new_password" required>
 
                         <label for="confirm_password">Xác nhận mật khẩu mới:</label>
-                        <input type="password" id="confirm_password" name="confirm_password" required>
+                        <input type="password" id="confirm_password" name="new_password_confirmation" required>
+
                     </div>
                 </div>
                 <button type="submit">Thay đổi mật khẩu</button>
