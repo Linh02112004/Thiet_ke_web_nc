@@ -1,12 +1,12 @@
 <div class="event-card" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
     <h3 style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">{{ $event->event_name }}</h3>
     <p style="margin: 4px 0;">{{ Str::limit($event->description, 100) }}</p>
-    <p style="margin: 4px 0;"><strong>Tổ chức:</strong> {{ $event->user->organization_name ?? 'N/A' }}</p>
+    <p style="margin: 4px 0;"><strong>Tổ chức:</strong> {{ $event->organization->organization_name ?? 'N/A' }}</p>
     <p style="margin: 4px 0;"><strong>Người phụ trách:</strong> {{ $event->organizer_name }}</p>
     <p style="margin: 4px 0;"><strong>Địa điểm hỗ trợ:</strong> {{ $event->location }}</p>
 
     @php
-        $raised = $event->raised ?? 0; // Giả định bạn có cột này
+        $raised = $event->raised ?? 0; 
         $goal = $event->goal;
         $percent = $goal > 0 ? min(100, round(($raised / $goal) * 100)) : 0;
     @endphp

@@ -12,6 +12,7 @@
     <div class="header-right">
         <div id="userMenu">
             <span>Xin chào, Tổ chức {{ Auth::user()->organization_name }}</span>
+            <span id="arrowDown" class="arrow">▼</span>
             <div class="dropdown-content">
                 <a href="#" id="updateInfoLink">Cập nhật thông tin</a>
                 <a href="#" id="changePasswordLink">Thay đổi mật khẩu</a> 

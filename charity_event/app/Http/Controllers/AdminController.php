@@ -35,30 +35,35 @@ class AdminController extends Controller
 
         // Lấy danh sách sự kiện với tổng tiền đã quyên góp
         $events = DB::table('events as e')
-            ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
-            ->join('users as u', 'e.user_id', '=', 'u.id') // user_id là tổ chức
-            ->select(
-                'e.id as event_id',
-                'e.event_name as name',
-                'e.description',
-                'e.status',
-                'u.organization_name as organization',
-                'e.organizer_name',
-                'e.location',
-                'e.goal',
-                DB::raw('COALESCE(SUM(d.amount), 0) as amount_raised')
-            )
-            ->groupBy(
-                'e.id',
-                'e.event_name',
-                'e.description',
-                'e.status',
-                'u.organization_name',
-                'e.organizer_name',
-                'e.location',
-                'e.goal'
-            )
-            ->get();
+        ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
+        ->join('users as u', 'e.user_id', '=', 'u.id') // user_id là tổ chức
+        ->select(
+            'e.id as event_id',
+            'e.event_name as name',
+            'e.description',
+            'e.status',
+            'u.organization_name as organization',
+            'e.organizer_name',
+            'e.location',
+            'e.goal',
+            DB::raw('COALESCE(SUM(d.amount), 0) as amount_raised'),
+            DB::raw('(
+                SELECT COUNT(*) 
+                FROM event_edits ed 
+                WHERE ed.event_id = e.id AND ed.status = "pending"
+            ) as pending')
+        )
+        ->groupBy(
+            'e.id',
+            'e.event_name',
+            'e.description',
+            'e.status',
+            'u.organization_name',
+            'e.organizer_name',
+            'e.location',
+            'e.goal'
+        )
+        ->get();
 
         return view('admin.ad_index', compact('user', 'events'));
 

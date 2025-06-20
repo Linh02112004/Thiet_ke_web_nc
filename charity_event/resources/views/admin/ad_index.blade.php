@@ -15,7 +15,7 @@
                 <span id="arrowDown" class="arrow">▼</span>
                 <div id="dropdown" class="dropdown-content">
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
-                    Đăng xuất
+                        Đăng xuất
                     </a>
                     <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
@@ -33,60 +33,59 @@
 
         <h2>Sự kiện đang diễn ra</h2>
         <div id="ongoing-events" class="events-list">
-            <?php foreach ($events as $event): ?>
-                <?php if ($event['status'] === 'ongoing' && $event['amount_raised'] < $event['goal']): ?>
+            @foreach ($events as $event)
+                @if ($event->status === 'ongoing' && $event->amount_raised < $event->goal)
                     <div class="event-card">
                         <h3>
-                            <?php if ($event['pending'] > 0): ?>
+                            @if ($event->pending > 0)
                                 <span class="warning-icon"><big>❗</big></span>
-                            <?php endif; ?>
-
-                            <?php echo htmlspecialchars($event['name']); ?>
+                            @endif
+                            {{ htmlspecialchars($event->name) }}
                         </h3>
-                        <div class="event-description"><?= nl2br(htmlspecialchars($event['description'])) ?></div>
-                        <p><strong>Tổ chức:</strong> <?php echo htmlspecialchars($event['organization']); ?></p>
-                        <p><strong>Người phụ trách:</strong> <?php echo htmlspecialchars($event['organizer_name']); ?></p>
-                        <p><strong>Địa điểm hỗ trợ:</strong> <?= htmlspecialchars($event['location']) ?></p>
-                        <?php
-                        $goal = $event['goal'];
-                        $raised = $event['amount_raised'];
-                        $progress = ($goal > 0) ? min(100, ($raised / $goal) * 100) : 0;
-                        ?>
+                        <div class="event-description">{!! nl2br(e($event->description)) !!}</div>
+                        <p><strong>Tổ chức:</strong> {{ htmlspecialchars($event->organization) }}</p>
+                        <p><strong>Người phụ trách:</strong> {{ htmlspecialchars($event->organizer_name) }}</p>
+                        <p><strong>Địa điểm hỗ trợ:</strong> {{ htmlspecialchars($event->location) }}</p>
+                        @php
+                            $goal = $event->goal;
+                            $raised = $event->amount_raised;
+                            $progress = ($goal > 0) ? min(100, ($raised / $goal) * 100) : 0;
+                        @endphp
                         <div class="progress-bar">
-                            <div class="progress" style="width: <?php echo $progress; ?>%;">
-                            <?php echo $progress; ?>%
+                            <div class="progress" style="width: {{ $progress }}%;">
+                                {{ $progress }}%
                             </div>
                         </div>
-                        <button onclick="window.location.href='ad_eventDetails.php?id=<?php echo $event['event_id']; ?>'">Xem</button>
+                        <button onclick="window.location.href='ad_eventDetails.php?id={{ $event->event_id }}'">Xem</button>
                     </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
+                @endif
+            @endforeach
         </div>
 
         <h2>Sự kiện đã hoàn thành</h2>
         <div id="completed-events" class="events-list">
-            <?php foreach ($events as $event): ?>
-                <?php if ($event['status'] === 'completed' || $event['amount_raised'] >= $event['goal']): ?>
+            @foreach ($events as $event)
+                @if ($event->status === 'completed' || $event->amount_raised >= $event->goal)
                     <div class="event-card">
-                    <h3><?php echo htmlspecialchars($event['name']); ?></h3>
-                        <p><?= nl2br(htmlspecialchars($event['description'])) ?></p>
-                        <p><strong>Tổ chức:</strong> <?php echo htmlspecialchars($event['organization']); ?></p>
-                        <p><strong>Người phụ trách:</strong> <?php echo htmlspecialchars($event['organizer_name']); ?></p>
-                        <p><strong>Địa điểm hỗ trợ:</strong> <?= htmlspecialchars($event['location']) ?></p>
-                        <?php
-                        $goal = $event['goal'];
-                        $raised = $event['amount_raised'];
-                        $progress = ($goal > 0) ? min(100, ($raised / $goal) * 100) : 0;
-                        ?>
+                        <h3>{{ htmlspecialchars($event->name) }}</h3>
+                        <p>{!! nl2br(e($event->description)) !!}</p>
+                        <p><strong>Tổ chức:</strong> {{ htmlspecialchars($event->organization) }}</p>
+                        <p><strong>Người phụ trách:</strong> {{ htmlspecialchars($event->organizer_name) }}</p>
+                        <p><strong>Địa điểm hỗ trợ:</strong> {{ htmlspecialchars($event->location) }}</p>
+                        @php
+                            $goal = $event->goal;
+                            $raised = $event->amount_raised;
+                            $progress = ($goal > 0) ? min(100, ($raised / $goal) * 100) : 0;
+                        @endphp
                         <div class="progress-bar">
-                            <div class="progress" style="width: <?php echo $progress; ?>%;">
-                            <?php echo $progress; ?>%
+                            <div class="progress" style="width: {{ $progress }}%;">
+                                {{ $progress }}%
                             </div>
                         </div>
-                        <button onclick="window.location.href='ad_eventDetails.php?id=<?php echo $event['event_id']; ?>'">Xem</button>
+                        <button onclick="window.location.href='ad_eventDetails.php?id={{ $event->event_id }}'">Xem</button>
                     </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
+                @endif
+            @endforeach
         </div>
     </main>
 
@@ -101,3 +100,5 @@
             <p class="footer-copyright">Copyright © 2025 Hope.</p>
         </div>
     </footer>
+</body>
+</html>
