@@ -59,7 +59,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
         Route::get('/index', [OrganizationController::class, 'index'])->name('organization.org_index');
 
         // Event - xem chi tiết, tạo, xóa
-        Route::get('/event/{id}', [OrganizationController::class, 'showEventDetails'])->name('organization.event.details'); // ✅ Đổi dấu _ thành dấu .
+        Route::get('/event/{id}', [OrganizationController::class, 'showEventDetails'])->name('organization.event.details');
         Route::post('/event/create', [OrganizationController::class, 'createEvent'])->name('organization.createEvent');
         Route::delete('/event/{id}', [OrganizationController::class, 'deleteEvent'])->name('organization.event.delete');
 

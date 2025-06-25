@@ -37,7 +37,6 @@ class OrganizationController extends Controller
             ->select(
                 'e.*',
                 'u.organization_name as organizer',
-                'u.full_name as organizer_name',
                 DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM donations WHERE event_id = e.id) as total_donated'),
                 DB::raw('(SELECT COUNT(*) FROM donations WHERE event_id = e.id) as donation_count')
             )
