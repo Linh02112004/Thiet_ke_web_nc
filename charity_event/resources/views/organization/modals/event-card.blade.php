@@ -6,7 +6,7 @@
     <p style="margin: 4px 0;"><strong>Địa điểm hỗ trợ:</strong> {{ $event->location }}</p>
 
     @php
-        $raised = $event->raised ?? 0; 
+        $raised = $event->raised ?? 0;
         $goal = $event->goal;
         $percent = $goal > 0 ? min(100, round(($raised / $goal) * 100)) : 0;
     @endphp
@@ -17,7 +17,9 @@
         </div>
     </div>
 
-    <a href="#" class="btn btn-success" style="display: block; background-color: #28a745; color: white; text-align: center; padding: 8px; border-radius: 5px; text-decoration: none;">
+    <a href="{{ route('organization.event.details', ['id' => $event->id]) }}" 
+       class="btn btn-success" 
+       style="display: block; background-color: #28a745; color: white; text-align: center; padding: 8px; border-radius: 5px; text-decoration: none;">
         Xem
     </a>
 </div>
