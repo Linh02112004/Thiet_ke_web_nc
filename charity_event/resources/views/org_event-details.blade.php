@@ -8,7 +8,7 @@
 </head>
 <body>
 <header>
-    <h1><a href="{{ route('organization.org_index') }}">🌱 HY VỌNG</a></h1>
+    <h1><a href="{{ route('org_index') }}">🌱 HY VỌNG</a></h1>
     <div class="header-right">
         <div id="userMenu">
             <span>Xin chào, Tổ chức {{ $event->organizer }}</span>

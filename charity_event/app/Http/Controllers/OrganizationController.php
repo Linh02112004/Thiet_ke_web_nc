@@ -12,16 +12,66 @@ use Illuminate\Support\Facades\Validator;
 
 class OrganizationController extends Controller
 {
-    // Trang dashboard: danh sách sự kiện
     public function index()
     {
         $orgId = Auth::id();
         $user = Auth::user();
 
-        $eventsOngoing = Event::where('user_id', $orgId)->where('status', 'ongoing')->get();
-        $eventsCompleted = Event::where('user_id', $orgId)->where('status', 'completed')->get();
+        // Cập nhật trạng thái sự kiện nếu đã đạt đủ goal (chỉ của tổ chức hiện tại)
+        DB::transaction(function () use ($orgId) {
+            $eventsToComplete = DB::table('events as e')
+                ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
+                ->where('e.user_id', $orgId)
+                ->select('e.id', DB::raw('COALESCE(SUM(d.amount), 0) as total_donations'), 'e.goal')
+                ->groupBy('e.id', 'e.goal')
+                ->havingRaw('COALESCE(SUM(d.amount), 0) >= e.goal')
+                ->pluck('e.id');
 
-        return view('organization.org_index', [
+            if ($eventsToComplete->isNotEmpty()) {
+                DB::table('events')
+                    ->whereIn('id', $eventsToComplete)
+                    ->update(['status' => 'completed']);
+            }
+        });
+
+        // Lấy danh sách sự kiện của tổ chức hiện tại kèm thông tin tổng tiền và pending edit
+        $events = DB::table('events as e')
+            ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
+            ->join('users as u', 'e.user_id', '=', 'u.id')
+            ->where('e.user_id', $orgId)
+            ->select(
+                'e.id as event_id',
+                'e.event_name as name',
+                'e.description',
+                'e.status',
+                'e.organizer_name',
+                'e.location',
+                'e.goal',
+                DB::raw('COALESCE(SUM(d.amount), 0) as amount_raised'),
+                DB::raw('(
+                    SELECT COUNT(*) 
+                    FROM event_edits ed 
+                    WHERE ed.event_id = e.id AND ed.status = "pending"
+                ) as pending'),
+                'u.organization_name as organization'
+            )
+            ->groupBy(
+                'e.id',
+                'e.event_name',
+                'e.description',
+                'e.status',
+                'e.organizer_name',
+                'e.location',
+                'e.goal',
+                'u.organization_name'
+            )
+            ->get();
+
+        // Tách ongoing và completed để dễ hiển thị
+        $eventsOngoing = $events->where('status', 'ongoing');
+        $eventsCompleted = $events->where('status', 'completed');
+
+        return view('org_index', [
             'ongoingEvents' => $eventsOngoing,
             'completedEvents' => $eventsCompleted,
             'user' => $user
@@ -63,7 +113,7 @@ class OrganizationController extends Controller
             )
             ->get();
 
-        return view('organization.modals.event-details', compact('event', 'donations', 'comments'));
+        return view('org_event-details', compact('event', 'donations', 'comments'));
     }
 
     // Hiển thị form yêu cầu chỉnh sửa sự kiện
@@ -155,7 +205,7 @@ class OrganizationController extends Controller
             'status' => 'ongoing',
         ]);
 
-        return redirect()->route('organization.org_index')->with('success', 'Sự kiện đã được tạo thành công.');
+        return redirect()->route('org_index')->with('success', 'Sự kiện đã được tạo thành công.');
     }
 
     // Cập nhật thông tin tổ chức
@@ -175,7 +225,7 @@ class OrganizationController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('organization.org_index')->with('success', 'Thông tin tổ chức đã được cập nhật.');
+        return redirect()->route('org_index')->with('success', 'Thông tin tổ chức đã được cập nhật.');
     }
 
     // Đổi mật khẩu
@@ -209,6 +259,6 @@ class OrganizationController extends Controller
 
         $event->delete();
 
-        return redirect()->route('organization.org_index')->with('success', 'Xóa sự kiện thành công');
+        return redirect()->route('org_index')->with('success', 'Xóa sự kiện thành công');
     }
 }

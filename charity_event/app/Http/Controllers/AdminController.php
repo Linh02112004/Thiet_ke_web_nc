@@ -65,7 +65,13 @@ class AdminController extends Controller
         )
         ->get();
 
-        return view('admin.ad_index', compact('user', 'events'));
+        $eventsOngoing = $events->where('status', 'ongoing');
+        $eventsCompleted = $events->where('status', 'completed');
 
+        return view('ad_index', [
+            'ongoingEvents' => $eventsOngoing,
+            'completedEvents' => $eventsCompleted,
+            'user' => $user
+        ]);
     }
 }

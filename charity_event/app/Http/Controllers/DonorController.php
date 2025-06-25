@@ -56,38 +56,53 @@ class DonorController extends Controller
             )
             ->get();
 
-        return view('donor.dn_index', compact('user', 'events'));
+        $eventsOngoing = $events->where('status', 'ongoing');
+        $eventsCompleted = $events->where('status', 'completed');
+
+        return view('dn_index', [
+            'ongoingEvents' => $eventsOngoing,
+            'completedEvents' => $eventsCompleted,
+            'user' => $user
+        ]);
     }
 
-    // public function updateInfo(Request $request)
-    // {
-    //     $user = Auth::user();
-
-    //     $request->validate([
-    //         'full_name' => 'required|string|max:255',
-    //         'phone' => 'nullable|string|max:20',
-    //     ]);
-
-    //     $user->update($request->only('full_name', 'phone'));
-
-    //     return redirect()->back()->with('success', 'Cập nhật thông tin thành công.');
-    // }
-
-    public function changePassword(Request $request)
+    public function updateInfo(Request $request)
     {
         $user = Auth::user();
 
         $request->validate([
-            'old_password' => 'required',
+            'fullname' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'email' => 'required|email|max:255',
+            'social_media' => 'nullable|url|max:255',
+        ]);
+
+        $user->full_name = $request->input('fullname');
+        $user->phone = $request->input('phone');
+        $user->email = $request->input('email');
+        $user->social_media = $request->input('social_media');
+        $user->save();
+
+        return redirect()->route('dn_index')->with('success', 'Thông tin tổ chức đã được cập nhật.');
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
             'new_password' => 'required|min:6|confirmed',
         ]);
 
-        if (!Hash::check($request->old_password, $user->password_hash)) {
-            return back()->withErrors(['old_password' => 'Mật khẩu hiện tại không chính xác']);
+        $user = Auth::user();
+
+        if (!Hash::check($request->current_password, $user->password_hash)) {
+            return back()->with('error', 'Mật khẩu hiện tại không đúng.');
         }
 
-        $user->update(['password_hash' => Hash::make($request->new_password)]);
+        $user->password_hash = Hash::make($request->new_password);
+        $user->save();
 
-        return back()->with('success', 'Đổi mật khẩu thành công.');
+        return back()->with('success', 'Mật khẩu đã được thay đổi.');
     }
 }

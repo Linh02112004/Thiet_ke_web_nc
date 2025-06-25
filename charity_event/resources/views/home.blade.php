@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌱 HY VỌNG</title>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -117,7 +116,7 @@
         </div>
     </footer>
 
-    @include('partials.auth-modals')
+    @include('modals.auth-modals')
 
     <script src="{{ asset('js/home.js') }}"></script>
     <script>

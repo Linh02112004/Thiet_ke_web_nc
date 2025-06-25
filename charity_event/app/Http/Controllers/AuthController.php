@@ -57,11 +57,11 @@ class AuthController extends Controller
 
             switch ($user->role) {
                 case 'admin': 
-                    return redirect()->route('admin.ad_index');
+                    return redirect()->route('ad_index');
                 case 'organization': 
-                    return redirect()->route('organization.org_index');
+                    return redirect()->route('org_index');
                 case 'donor': 
-                    return redirect()->route('donor.dn_index');
+                    return redirect()->route('dn_index');
             }
         }
 

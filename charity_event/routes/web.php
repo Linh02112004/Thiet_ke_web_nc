@@ -45,7 +45,7 @@ Route::get('/check-cookie', function () {
 Route::middleware(['auth', RoleMiddleware::class . ':donor'])
     ->prefix('donor')
     ->group(function () {
-        Route::get('/index', [DonorController::class, 'index'])->name('donor.dn_index');
+        Route::get('/index', [DonorController::class, 'index'])->name('dn_index');
         Route::post('/update-info', [DonorController::class, 'updateInfo'])->name('donor.updateInfo');
         Route::post('/change-password', [DonorController::class, 'changePassword'])->name('donor.changePassword');
     });
@@ -56,7 +56,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':donor'])
 Route::middleware(['auth', RoleMiddleware::class . ':organization'])
     ->prefix('organization')
     ->group(function () {
-        Route::get('/index', [OrganizationController::class, 'index'])->name('organization.org_index');
+        Route::get('/index', [OrganizationController::class, 'index'])->name('org_index');
 
         // Event - xem chi tiết, tạo, xóa
         Route::get('/event/{id}', [OrganizationController::class, 'showEventDetails'])->name('organization.event.details');
@@ -78,5 +78,5 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])
     ->prefix('admin')
     ->group(function () {
-        Route::get('/index', [AdminController::class, 'index'])->name('admin.ad_index');
+        Route::get('/index', [AdminController::class, 'index'])->name('ad_index');
     });
