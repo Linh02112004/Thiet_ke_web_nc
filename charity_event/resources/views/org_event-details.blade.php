@@ -1,32 +1,8 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌱 HY VỌNG - {{ $event->event_name }}</title>
-    <link rel="stylesheet" href="{{ asset('css/organization.css') }}">
-</head>
-<body>
-<header>
-    <h1><a href="{{ route('org_index') }}">🌱 HY VỌNG</a></h1>
-    <div class="header-right">
-        <div id="userMenu">
-            <span>Xin chào, Tổ chức {{ $event->organizer }}</span>
-            <span id="arrowDown" class="arrow">▼</span>
-            <div class="dropdown-content">
-                <a href="#">Cập nhật thông tin</a>
-                <a href="#">Thay đổi mật khẩu</a>
-                <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Đăng xuất</a>
-                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
-        </div>
-    </div>
-</header>
+@extends('layouts.master')
 
-<main>
+@section('title', '🌱 HY VỌNG - Tổ chức')
+
+@section('content')
     <div class="container">
         <h1>{{ $event->event_name }}</h1>
         <div class="content-wrapper">
@@ -83,7 +59,7 @@
                             {{ round($percent) }}%
                         </div>
                     </div>
-                    <p>{{ $donations->count() }} người đã quyên góp</p>
+                    <p>{{ $donations->count() }} lượt quyên góp</p>
                 </div>
 
                 <div class="right-bottom">
@@ -108,23 +84,13 @@
             </div>
         </div>
     </div>
-</main>
 
-<footer>
-    <div class="footer-container">
-        <h1>🌱 HY VỌNG</h1>
-        <ul class="footer-links">
-            <li><a href="#">Điều khoản & Điều kiện</a></li>
-            <li><a href="#">Chính sách bảo mật</a></li>
-            <li><a href="#">Chính sách Cookie</a></li>
-        </ul>
-        <p class="footer-copyright">Copyright © 2025 Hope.</p>
-    </div>
-</footer>
+    @include('modals.request-edit', ['event' => $event])
+@endsection
 
-<!-- Pop-up yêu cầu sửa -->
-@include('organization.modals.request-edit', ['event' => $event])
-
+@push('scripts')
+    <script src="{{ asset('js/organization.js') }}"></script>
+@endpush
 
 <!-- JS popup & comment -->
 <script>
