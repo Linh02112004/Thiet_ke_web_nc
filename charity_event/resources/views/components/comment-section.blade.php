@@ -1,4 +1,4 @@
-<div id="commentSection">
+<div id="commentSection" data-event-id="{{ $event->id }}">
     @if ($comments->isNotEmpty())
         <ul>
             @foreach ($comments as $comment)

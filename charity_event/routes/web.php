@@ -7,6 +7,7 @@ use App\Http\Controllers\DonorController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':donor'])
 
         Route::get('/event/{id}', [DonorController::class, 'showEventDetails'])->name('donor.event.details');
 
-        Route::post('/event/comment', [DonorController::class, 'submitComment'])->name('donor.comment');
+        //Route::post('/event/comment', [DonorController::class, 'submitComment'])->name('donor.comment');
 
         Route::post('/event/donate', [DonorController::class, 'confirmDonation'])->name('donor.confirmDonation');
     });
@@ -85,3 +86,5 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
         Route::post('/event/{id}/edit/handle', [AdminController::class, 'approveEdit'])->name('admin.event.approveEdit');
         Route::delete('/event/{id}', [AdminController::class, 'deleteEvent'])->name('admin.event.delete');
     });
+
+Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');

@@ -120,8 +120,15 @@ class AdminController extends Controller
             ->join('users as u', 'c.user_id', '=', 'u.id')
             ->where('c.event_id', $id)
             ->select(
-                'c.comment', 'c.created_at',
-                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END as commenter_name")
+                'c.comment',
+                'c.created_at',
+                DB::raw("
+                    CASE 
+                        WHEN u.role = 'admin' THEN 'Quản trị viên'
+                        WHEN u.role = 'organization' THEN CONCAT('Tổ chức ', u.organization_name)
+                        ELSE u.full_name
+                    END as commenter_name
+                ")
             )
             ->orderByDesc('c.created_at')
             ->get();

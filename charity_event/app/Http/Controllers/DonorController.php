@@ -154,7 +154,13 @@ class DonorController extends Controller
             ->select(
                 'c.comment',
                 'c.created_at',
-                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END as commenter_name")
+                DB::raw("
+                    CASE 
+                        WHEN u.role = 'admin' THEN 'Quản trị viên'
+                        WHEN u.role = 'organization' THEN CONCAT('Tổ chức ', u.organization_name)
+                        ELSE u.full_name
+                    END as commenter_name
+                ")
             )
             ->get();
 

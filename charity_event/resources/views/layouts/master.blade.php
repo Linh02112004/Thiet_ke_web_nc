@@ -41,5 +41,8 @@
         <script src="{{ asset('js/donor.js') }}"></script>
     @endif
 
+    <script>
+        const COMMENT_URL = "{{ route('comment.store') }}";
+    </script>
 </body>
 </html>

@@ -124,15 +124,26 @@ class OrganizationController extends Controller
             ->select('u.full_name as donor_name', 'd.amount', 'd.donated_at')
             ->get();
 
-        $comments = DB::table('comments as c')
-            ->join('users as u', 'c.user_id', '=', 'u.id')
-            ->where('c.event_id', $id)
-            ->orderByDesc('c.created_at')
-            ->select(
-                'c.comment', 'c.created_at',
-                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END as commenter_name")
-            )
-            ->get();
+        $eventModel = Event::with(['comments' => function ($query) {
+            $query->orderBy('created_at', 'desc'); 
+        }, 'comments.user'])->find($id);
+        $comments = $eventModel->comments->map(function ($comment) {
+            $user = $comment->user;
+
+            if ($user->role === 'organization') {
+                $name = 'Tổ chức ' . $user->organization_name;
+            } elseif ($user->role === 'admin') {
+                $name = 'Quản trị viên';
+            } else {
+                $name = $user->full_name;
+            }
+
+            return (object)[
+                'comment' => $comment->comment,
+                'created_at' => $comment->created_at,
+                'commenter_name' => $name,
+            ];
+        });
 
         return view('org_event-details', compact('event', 'donations', 'comments'));
     }
