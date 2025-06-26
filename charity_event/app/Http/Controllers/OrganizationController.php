@@ -257,8 +257,29 @@ class OrganizationController extends Controller
             abort(403);
         }
 
-        $event->delete();
+        $donationCount = DB::table('donations')
+            ->where('event_id', $id)
+            ->count();
 
-        return redirect()->route('org_index')->with('success', 'Xóa sự kiện thành công');
+        if ($donationCount > 0) {
+            return redirect()->route('org_index')->with('error', 'Không thể xóa sự kiện vì đã có quyên góp.');
+        }
+
+        DB::transaction(function () use ($id, $event) {
+            DB::table('comments')->where('event_id', $id)->delete();
+            DB::table('event_edits')->where('event_id', $id)->delete();
+
+            DB::table('notifications')
+                ->whereIn('user_id', function ($query) use ($id) {
+                    $query->select('user_id')
+                        ->from('events')
+                        ->where('id', $id);
+                })
+                ->delete();
+
+            $event->delete();
+        });
+
+        return redirect()->route('org_index')->with('success', 'Sự kiện đã được xóa thành công.');
     }
 }

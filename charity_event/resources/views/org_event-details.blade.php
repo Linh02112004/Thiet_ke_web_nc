@@ -18,7 +18,11 @@
                 <p><strong>Số tiền đã quyên góp:</strong> {{ number_format($event->total_donated) }} VND</p>
 
                 @if ($event->donation_count == 0)
-                    <button onclick="window.location.href='{{ url('or_deleteEvents.php?id=' . $event->id) }}'">Xóa sự kiện</button>
+                    <form action="{{ route('organization.event.delete', ['id' => $event->id]) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sự kiện này?');" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Xóa sự kiện</button>
+                    </form>
                 @endif
                 <button onclick="openEditModal()">Yêu cầu Sửa Sự kiện</button>
 
@@ -92,7 +96,6 @@
     <script src="{{ asset('js/organization.js') }}"></script>
 @endpush
 
-<!-- JS popup & comment -->
 <script>
 function openEditModal() {
     document.getElementById('editEventModal').style.display = 'block';
