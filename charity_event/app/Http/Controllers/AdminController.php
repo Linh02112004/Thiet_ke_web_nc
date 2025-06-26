@@ -120,5 +120,64 @@ class AdminController extends Controller
         return view('ad_event-details', compact('event', 'donations', 'comments', 'original', 'edit'));
     }
 
-    
+    public function approveEdit(Request $request, $id)
+    {
+        $eventId = (int) $id;
+        $action = $request->input('action');
+        $reason = trim($request->input('reason', '')); // Nếu từ chối
+
+        // Lấy bản chỉnh sửa đang chờ duyệt
+        $edit = DB::table('event_edits')
+            ->where('event_id', $eventId)
+            ->where('status', 'pending')
+            ->first();
+
+        if (!$edit) {
+            return back()->with('error', 'Không tìm thấy bản chỉnh sửa hoặc đã được xử lý.');
+        }
+
+        $event = DB::table('events')->where('id', $eventId)->first();
+        if (!$event) {
+            return back()->with('error', 'Sự kiện không tồn tại.');
+        }
+
+        if ($action === 'approve') {
+            // Cập nhật sự kiện gốc từ event_edits
+            DB::table('events')->where('id', $eventId)->update([
+                'event_name'     => $edit->event_name,
+                'description'    => $edit->description,
+                'location'       => $edit->location,
+                'goal'           => $edit->goal,
+                'organizer_name' => $edit->organizer_name,
+                'phone'          => $edit->phone,
+            ]);
+
+            // Gửi thông báo cho tổ chức
+            $message = "Yêu cầu chỉnh sửa sự kiện \"{$edit->event_name}\" của bạn đã được duyệt và cập nhật thành công.";
+            DB::table('notifications')->insert([
+                'user_id' => $event->user_id,
+                'message' => $message,
+                'created_at' => now(),
+            ]);
+        } elseif ($action === 'reject') {
+            if (empty($reason)) {
+                return back()->with('error', 'Lý do từ chối không được để trống.');
+            }
+
+            // Gửi thông báo từ chối
+            $message = "Yêu cầu chỉnh sửa sự kiện \"{$edit->event_name}\" của bạn đã bị từ chối: $reason";
+            DB::table('notifications')->insert([
+                'user_id' => $event->user_id,
+                'message' => $message,
+                'created_at' => now(),
+            ]);
+        } else {
+            return back()->with('error', 'Hành động không hợp lệ.');
+        }
+
+        // Xóa bản ghi chỉnh sửa sau khi xử lý
+        DB::table('event_edits')->where('event_id', $eventId)->delete();
+
+        return back()->with('success', 'Yêu cầu chỉnh sửa đã được xử lý.');
+    }
 }

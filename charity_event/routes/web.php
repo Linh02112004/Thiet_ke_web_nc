@@ -80,9 +80,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
     ->prefix('admin')
     ->group(function () {
         Route::get('/index', [AdminController::class, 'index'])->name('ad_index');
-
         Route::get('/event/{id}', [AdminController::class, 'showEventDetails'])->name('admin.event.details');
-        Route::post('/event/{id}/edit/approve', [AdminController::class, 'approveEdit'])->name('admin.event.approveEdit');
-        Route::post('/event/{id}/edit/reject', [AdminController::class, 'rejectEdit'])->name('admin.event.rejectEdit');
+        Route::post('/event/{id}/edit/handle', [AdminController::class, 'approveEdit'])->name('admin.event.approveEdit');
         Route::delete('/event/{id}', [AdminController::class, 'deleteEvent'])->name('admin.event.delete');
     });

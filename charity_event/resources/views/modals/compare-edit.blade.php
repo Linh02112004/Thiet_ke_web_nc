@@ -13,21 +13,17 @@
         </table>
 
         <form method="POST" action="{{ route('admin.event.approveEdit', ['id' => $event->id]) }}">
-            @csrf
-            <input type="hidden" name="edit_id" value="{{ $edit->id }}">
-            <div class="button-group">
-                <button type="submit" name="action" value="approve">Chấp nhận</button>
-                <button type="submit" name="action" value="reject" onclick="document.getElementById('reject-reason').style.display='block'">Từ chối</button>
-            </div>
-        </form>
+        @csrf
+        <input type="hidden" name="edit_id" value="{{ $edit->id }}">
+        <div class="button-group">
+            <button type="submit" name="action" value="approve">Chấp nhận</button>
+            <button type="submit" name="action" value="reject" onclick="document.getElementById('reject-reason').style.display='block'">Từ chối</button>
+        </div>
 
-        <form method="POST" action="{{ route('admin.event.rejectEdit', ['id' => $event->id]) }}">
-            @csrf
-            <input type="hidden" name="edit_id" value="{{ $edit->id }}">
-            <div class="reject-reason" id="reject-reason" style="display:none;">
-                <textarea name="reason" placeholder="Nhập lý do từ chối..." rows="2"></textarea>
-                <button type="submit">📩</button>
-            </div>
-        </form>
+        <div class="reject-reason" id="reject-reason" style="display:none;">
+            <textarea name="reason" placeholder="Nhập lý do từ chối..." rows="2"></textarea>
+            <button type="submit">📩</button>
+        </div>
+    </form>
     </div>
 </div>
