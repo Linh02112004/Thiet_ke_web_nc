@@ -30,5 +30,16 @@
     @include('components.footer')
 
     @stack('scripts')
+
+    <script src="{{ asset('js/base.js') }}"></script>
+
+    @php $role = Auth::user()->role ?? null; @endphp
+    @if ($role === 'admin')
+        <script src="{{ asset('js/admin.js') }}"></script>
+    @elseif ($role === 'organization')
+        <script src="{{ asset('js/organization.js') }}"></script>
+    @elseif ($role === 'donor')
+        <script src="{{ asset('js/donor.js') }}"></script>
+    @endif
 </body>
 </html>

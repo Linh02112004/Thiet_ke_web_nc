@@ -78,7 +78,6 @@ class OrganizationController extends Controller
         ]);
     }
 
-    // Trang chi tiết sự kiện (hiện thông tin + quyên góp + bình luận)
     public function showEventDetails($id)
     {
         $event = DB::table('events as e')
@@ -125,7 +124,7 @@ class OrganizationController extends Controller
             abort(403);
         }
 
-        return view('organization.request-edit', compact('event'));
+        return view('modals.request-edit', compact('event'));
     }
 
     // Gửi yêu cầu chỉnh sửa
@@ -164,12 +163,9 @@ class OrganizationController extends Controller
             'goal' => $request->goal,
             'organizer_name' => $request->organizer_name,
             'phone' => $request->phone,
-            'created_at' => now(),
-            'updated_at' => now()
         ]);
 
-        return redirect()->route('organization.event_details', ['id' => $request->event_id])
-            ->with('success', 'Yêu cầu chỉnh sửa đã được gửi! Chờ quản trị viên duyệt.');
+        return back()->with('success', 'Yêu cầu chỉnh sửa đã được gửi! Chờ quản trị viên duyệt.');
     }
 
     // Tạo sự kiện mới

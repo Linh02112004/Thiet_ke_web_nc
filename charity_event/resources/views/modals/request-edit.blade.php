@@ -39,32 +39,9 @@
             </div>
 
             <div style="text-align: right; margin-top: 20px;">
-                <button type="submit" class="btn btn-primary" style="padding: 8px 16px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Gửi yêu cầu</button>
-                <button type="button" onclick="closeModal('editEventModal')" class="btn" style="margin-left: 10px;">Hủy</button>
+                <button type="submit" class="btn btn-primary">Gửi yêu cầu</button>
+                <button type="button" class="btn btn-primary" onclick="closeModal('editEventModal')" class="btn" style="margin-left: 10px;">Hủy</button>
             </div>
         </form>
     </div>
 </div>
-
-<style>
-/* Modal nền */
-.modal {
-    position: fixed;
-    z-index: 9999;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-.modal-content input, .modal-content textarea {
-    width: 100%;
-    padding: 6px;
-    margin-top: 4px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-</style>

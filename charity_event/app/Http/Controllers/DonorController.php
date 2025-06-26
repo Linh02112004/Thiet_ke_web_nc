@@ -105,4 +105,57 @@ class DonorController extends Controller
 
         return back()->with('success', 'Mật khẩu đã được thay đổi.');
     }
+
+    public function showEventDetails($id)
+    {
+        $event = DB::table('events as e')
+            ->join('users as u', 'e.user_id', '=', 'u.id')
+            ->where('e.id', $id)
+            ->select(
+                'e.*',
+                'u.organization_name as organizer',
+                DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM donations WHERE event_id = e.id) as total_donated'),
+                DB::raw('(SELECT COUNT(*) FROM donations WHERE event_id = e.id) as donation_count')
+            )
+            ->first();
+
+        if (!$event) {
+            abort(404, 'Sự kiện không tồn tại.');
+        }
+
+        $donations = DB::table('donations as d')
+            ->join('users as u', 'd.donor_id', '=', 'u.id')
+            ->where('d.event_id', $id)
+            ->orderBy('d.donated_at', 'desc')
+            ->select('u.full_name as donor_name', 'd.amount', 'd.donated_at')
+            ->get();
+
+        $comments = DB::table('comments as c')
+            ->join('users as u', 'c.user_id', '=', 'u.id')
+            ->where('c.event_id', $id)
+            ->orderBy('c.created_at', 'desc')
+            ->select(
+                'c.comment',
+                'c.created_at',
+                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END AS commenter_name")
+            )
+            ->get();
+
+        $bankCodes = [
+            "BIDV" => "BIDV",
+            "Vietcombank" => "VCB",
+            "Techcombank" => "TCB",
+            "Agribank" => "VBA",
+            "ACB" => "ACB",
+            "MB Bank" => "MB",
+            "VPBank" => "VPB"
+        ];
+
+        $bankCode = $bankCodes[$event->bank_name] ?? null;
+
+        $user = Auth::user();
+        $fullName = $user->full_name ?? 'Người dùng';
+
+        return view('dn_event-details', compact('event', 'donations', 'comments', 'bankCode', 'fullName'));
+    }
 }

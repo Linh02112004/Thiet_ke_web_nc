@@ -5,9 +5,9 @@
     $role = Auth::user()->role;
 
     $detailRoute = match ($role) {
-        #'admin' => route('admin.event.details', ['id' => $event->event_id]),
+        'admin' => route('admin.event.details', ['id' => $event->event_id]),
         'organization' => route('organization.event.details', ['id' => $event->event_id]),
-        #'donor' => route('donor.event.details', ['id' => $event->event_id]),
+        'donor' => route('donor.event.details', ['id' => $event->event_id]),
         default => '#',
     };
 

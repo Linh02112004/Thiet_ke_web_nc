@@ -15,216 +15,74 @@
     border-radius: 50%;
 }
 
-/* Input và Select */
-.modal input,
-.modal select {
+/* So sánh thay đổi */
+#compareModal h2 {
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+/* Bảng dữ liệu cũ/mới */
+#compareModal table {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    font-size: 15px;
+}
+
+#compareModal th,
+#compareModal td {
+    padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    text-align: left;
+    vertical-align: top;
 }
 
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-top: 10px;
-}
-
-.button-group button {
-    width: 30%;
-    padding: 10px;
-    margin-top: 10px;
+#compareModal th {
     background-color: #007BFF;
     color: white;
-    border: none;
-    cursor: pointer;
+}
+
+/* Nhóm nút Chấp nhận / Từ chối */
+#compareModal .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#compareModal .button-group button {
+    width: auto;
+    min-width: 120px;
+}
+
+/* Lý do từ chối hiển thị sau khi click */
+#compareModal .reject-reason {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#compareModal .reject-reason textarea {
+    width: 70%;
+    resize: vertical;
+    padding: 10px;
+    font-size: 14px;
     border-radius: 5px;
-    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+#compareModal .reject-reason button {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+    padding: 0;
+    background-color: #ffffff00;
     transition: background 0.3s;
 }
 
-.button-group button:hover {
-    background-color: #0056b3;
-}
-
-.reject-reason {
-    position: relative;
-    width: 100%;
-    margin-top: 10px;
-}
-
-#reason {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    resize: none;
-    padding-right: 45px;
-    /* Chừa khoảng trống bên phải cho nút gửi */
-    box-sizing: border-box;
-}
-
-.reject-reason button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    border: none;
-    padding: 5px;
-    border-radius: 8px;
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
-}
-
-.reject-reason button:hover {
-    background-color: #0056b3;
-}
-
-.container {
-    width: 100%;
-}
-
-.content-wrapper {
-    display: flex;
-    gap: 30px;
-}
-
-/* Container Left */
-.container-left {
-    width: 70%;
-}
-
-.comment-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-#commentText {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    resize: none;
-    padding-right: 40px;
-}
-
-.comment-box button {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    background-color: #007bff;
-    border: none;
-    padding: 5px 5px;
-    border-radius: 8%;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.comment-box button:hover {
-    background-color: #0056b3;
-}
-
-#commentSection ul {
-    list-style: none;
-    padding: 0;
-}
-
-#commentSection li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-#commentSection li:last-child {
-    border-bottom: none;
-}
-
-#commentSection strong {
-    color: #333;
-    font-weight: bold;
-}
-
-#commentSection small {
-    color: #777;
-    font-size: 12px;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 20px 0;
-}
-
-/* Container Right */
-.container-right {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Right Top */
-.right-top {
-    background-color: #8cc9e7;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-    color: white;
-}
-
-.progress-bar {
-    width: 100%;
-    background: #ddd;
-    height: 20px;
-    border-radius: 5px;
-    margin: 10px 0;
-    position: relative;
-}
-
-.progress {
-    height: 100%;
-    background: rgb(29, 194, 0);
-    border-radius: 5px;
-    color: white;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
-
-/* Right Bottom */
-.right-bottom {
-    background: #c1f2ff;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.right-bottom table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.right-bottom table th,
-.right-bottom table td {
-    background: #fff;
-    border: 1.5px solid black;
-    padding: 5px;
-    text-align: center;
-}
-
-.right-bottom table td {
-    font-size: 12px;
+#compareModal .reject-reason button:hover {
+    background-color: #ffffff00;
 }

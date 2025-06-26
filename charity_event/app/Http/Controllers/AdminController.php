@@ -74,4 +74,51 @@ class AdminController extends Controller
             'user' => $user
         ]);
     }
+
+    public function showEventDetails($id)
+    {
+        $event = DB::table('events as e')
+            ->join('users as u', 'e.user_id', '=', 'u.id')
+            ->where('e.id', $id)
+            ->select(
+                'e.*',
+                'u.organization_name as organizer',
+                DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM donations WHERE event_id = e.id) as total_donated'),
+                DB::raw('(SELECT COUNT(*) FROM donations WHERE event_id = e.id) as donation_count')
+            )
+            ->first();
+
+        if (!$event) {
+            abort(404, 'Sự kiện không tồn tại.');
+        }
+
+        $donations = DB::table('donations as d')
+            ->join('users as u', 'd.donor_id', '=', 'u.id')
+            ->where('d.event_id', $id)
+            ->select('u.full_name as donor_name', 'd.amount', 'd.donated_at')
+            ->orderByDesc('d.donated_at')
+            ->get();
+
+        $comments = DB::table('comments as c')
+            ->join('users as u', 'c.user_id', '=', 'u.id')
+            ->where('c.event_id', $id)
+            ->select(
+                'c.comment', 'c.created_at',
+                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END as commenter_name")
+            )
+            ->orderByDesc('c.created_at')
+            ->get();
+
+        $original = DB::table('events')->where('id', $id)->first();
+
+        $edit = DB::table('event_edits')
+            ->where('event_id', $id)
+            ->where('status', 'pending')
+            ->orderByDesc('created_at')
+            ->first();
+
+        return view('ad_event-details', compact('event', 'donations', 'comments', 'original', 'edit'));
+    }
+
+    
 }
