@@ -12,18 +12,51 @@
             <tr><td>Số điện thoại</td><td>{{ $original->phone }}</td><td>{{ $edit->phone }}</td></tr>
         </table>
 
-        <form method="POST" action="{{ route('admin.event.approveEdit', ['id' => $event->id]) }}">
-        @csrf
-        <input type="hidden" name="edit_id" value="{{ $edit->id }}">
-        <div class="button-group">
-            <button type="submit" name="action" value="approve">Chấp nhận</button>
-            <button type="button" id="showRejectReason">Từ chối</button>
-        </div>
+        <form id="approveForm" method="POST" action="{{ route('admin.event.approveEdit', ['id' => $event->id]) }}">
+            @csrf
+            <input type="hidden" name="edit_id" value="{{ $edit->id }}">
+            <input type="hidden" name="action" id="formAction" value="">
 
-        <div class="reject-reason" id="reject-reason" style="display:none;">
-            <textarea name="reason" placeholder="Nhập lý do từ chối..." rows="2" required></textarea>
-            <button type="submit" name="action" value="reject">📩</button>
-        </div>
-    </form>
+            <div class="button-group">
+                <button type="submit" onclick="submitApprove('approve')">Chấp nhận</button>
+                <button type="button" id="showRejectReason">Từ chối</button>
+            </div>
+
+            <div class="reject-reason" id="reject-reason" style="display:none; margin-top: 10px;">
+                <textarea name="reason" id="reasonTextarea" placeholder="Nhập lý do từ chối..." rows="2"></textarea>
+                <button type="submit" onclick="submitApprove('reject')">📩 Gửi</button>
+            </div>
+        </form>
     </div>
 </div>
+
+<script>
+function submitApprove(action) {
+    event.preventDefault();
+
+    const form = document.getElementById('approveForm');
+    const formActionInput = document.getElementById('formAction');
+    const textarea = document.getElementById('reasonTextarea');
+
+    formActionInput.value = action;
+
+    if (action === 'approve') {
+        textarea.removeAttribute('required');
+        form.submit();
+    } else if (action === 'reject') {
+        if (textarea.value.trim() === '') {
+            alert('Vui lòng nhập lý do từ chối.');
+            textarea.focus();
+            return;
+        }
+        textarea.setAttribute('required', 'required');
+        form.submit();
+    }
+}
+
+document.getElementById('showRejectReason').addEventListener('click', function () {
+    const rejectDiv = document.getElementById('reject-reason');
+    rejectDiv.style.display = 'block';
+    document.getElementById('reasonTextarea').focus();
+});
+</script>
