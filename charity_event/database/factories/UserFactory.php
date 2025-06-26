@@ -6,39 +6,25 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-        ];
-    }
+        $role = $this->faker->randomElement(['donor', 'organization']);
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return [
+            'id' => (string) Str::uuid(),
+            'full_name' => $role === 'donor' ? $this->faker->name() : null,
+            'organization_name' => $role === 'organization' ? $this->faker->company() : null,
+            'description' => $this->faker->optional()->sentence(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'phone' => $role === 'donor' ? $this->faker->unique()->phoneNumber() : null,
+            'address' => $this->faker->optional()->address(),
+            'password_hash' => Hash::make('password'),
+            'website' => $this->faker->optional()->url(),
+            'social_media' => $this->faker->optional()->url(),
+            'role' => $role,
+            'created_at' => now(),
+        ];
     }
 }

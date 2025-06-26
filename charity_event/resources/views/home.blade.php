@@ -117,7 +117,7 @@
         </div>
     </footer>
 
-    @include('partials.auth-modals')
+   @include('modals.auth-modals')
 
     <script src="{{ asset('js/home.js') }}"></script>
     <script>
