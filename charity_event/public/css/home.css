@@ -363,13 +363,14 @@ footer {
 .stats-section {
     padding: 60px 20px;
     background: #fff;
+    padding-bottom: 200px;
 }
 
 .stats-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap; /* hoặc nowrap tùy nếu muốn cố định 2 cột */
+    flex-wrap: wrap; 
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -381,8 +382,8 @@ footer {
 }
 
 .stats-subtitle {
-    color: #1d4ed8;
-    text-transform: uppercase;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
     font-size: 14px;
@@ -390,8 +391,8 @@ footer {
 }
 
 .stats-text h2 {
-    font-size: 28px;
-    font-weight: 800;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
     margin-bottom: 15px;
     color: #111;
 }
@@ -427,18 +428,17 @@ footer {
 
 /* Card chung */
 .stat-card {
-    width:200px;
-    height: 200px;
-    border-radius: 20px;
-    color: #fff;
-    padding: 20px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  border-radius: 20px;
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+  transition: transform 5s ease, left 5s ease, top 5s ease;
+  z-index: 1;
 }
+
 
 .stat-card .card-label {
     font-size: 14px;
@@ -481,7 +481,18 @@ footer {
     align-items: center;
     flex-direction: column;
 }
-
+.stats-cards.hovered .yellow-card {
+  top: 0;
+  left: 0;
+}
+.stats-cards.hovered .green-card {
+  top: 0;
+  left: 220px;
+}
+.stats-cards.hovered .blue-card {
+  top: 0;
+  left: 440px;
+}
 /* Vòng tròn tỷ lệ người ủng hộ */
 .circle-chart {
     width: 90px;
@@ -495,7 +506,6 @@ footer {
     font-weight: bold;
     font-size: 20px;
 }
-
 /* Responsive */
 @media (max-width: 768px) {
     .stats-container {

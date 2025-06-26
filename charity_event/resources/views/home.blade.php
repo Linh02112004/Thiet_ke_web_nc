@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌱 HY VỌNG</title>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -79,7 +80,7 @@
             <p class="stats-description">
                 Theo dõi toàn bộ hoạt động của sự kiện từ thiện: tổng chiến dịch, số tiền đã quyên góp, số người tham gia ủng hộ... tất cả hiển thị rõ ràng, minh bạch trong một màn hình duy nhất.
             </p>
-            <a href="#" class="stats-button">Xem chi tiết sự kiện</a>
+            <a href="#" class="stats-button">Xem chi tiết tính năng</a>
         </div>
 
         <!-- Bên phải: các chỉ số -->
@@ -116,7 +117,7 @@
         </div>
     </footer>
 
-    @include('modals.auth-modals')
+    @include('partials.auth-modals')
 
     <script src="{{ asset('js/home.js') }}"></script>
     <script>
@@ -137,6 +138,18 @@
         updateBackground();
         setInterval(updateBackground, 5000);
     });
+// phan 3
+    const cards = document.querySelectorAll('.stat-card');
+  const container = document.querySelector('.stats-cards');
+
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      container.classList.add('hovered');
+    });
+    card.addEventListener('mouseleave', () => {
+      container.classList.remove('hovered');
+    });
+  });
 </script>
 
 </body>
