@@ -11,7 +11,7 @@
             @include('components.event-info')
 
             @if ($event->donation_count == 0)
-                <form method="POST" action="{{ route('organization.event.delete', ['id' => $event->id]) }}">
+                <form method="POST" action="{{ route('admin.event.delete', ['id' => $event->id]) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Xóa sự kiện</button>

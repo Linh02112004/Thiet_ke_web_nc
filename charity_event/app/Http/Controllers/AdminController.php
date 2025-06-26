@@ -204,4 +204,38 @@ class AdminController extends Controller
 
         return back()->with('success', 'Yêu cầu chỉnh sửa đã được xử lý.');
     }
+
+    public function deleteEvent($id)
+    {
+        $event = DB::table('events')->where('id', $id)->first();
+
+        if (!$event) {
+            return redirect()->route('ad_index')->with('error', 'Sự kiện không tồn tại.');
+        }
+
+        $donationCount = DB::table('donations')
+            ->where('event_id', $id)
+            ->count();
+
+        if ($donationCount > 0) {
+            return redirect()->route('ad_index')->with('error', 'Không thể xóa sự kiện vì đã có quyên góp.');
+        }
+
+        DB::transaction(function () use ($id) {
+            DB::table('comments')->where('event_id', $id)->delete();
+            DB::table('event_edits')->where('event_id', $id)->delete();
+
+            DB::table('notifications')
+                ->whereIn('user_id', function ($query) use ($id) {
+                    $query->select('user_id')
+                        ->from('events')
+                        ->where('id', $id);
+                })
+                ->delete();
+
+            DB::table('events')->where('id', $id)->delete();
+        });
+
+        return redirect()->route('ad_index')->with('success', 'Sự kiện đã được xóa thành công.');
+    }
 }
