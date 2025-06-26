@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Hiện ô nhập lý do từ chối
-    const rejectButton = document.querySelector("button[onclick*='reject-reason']");
+    // Hiện ô nhập lý do từ chối khi bấm nút Từ chối
+    const showRejectButton = document.getElementById("showRejectReason");
     const rejectReasonBox = document.getElementById("reject-reason");
 
-    if (rejectButton && rejectReasonBox) {
-        rejectButton.addEventListener("click", function () {
+    if (showRejectButton && rejectReasonBox) {
+        showRejectButton.addEventListener("click", function () {
             rejectReasonBox.style.display = "block";
         });
     }
