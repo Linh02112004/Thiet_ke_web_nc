@@ -1,10 +1,8 @@
-@if (session('success'))
-    <script>alert('{{ session('success') }}');</script>
+@if (session('success') || session('error'))
+    <script>
+        alert('{{ session('success') ?? session('error') }}');
+    </script>
 @endif
-@if (session('error'))
-    <script>alert('{{ session('error') }}');</script>
-@endif
-
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -13,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌱 HY VỌNG</title>
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -35,75 +32,78 @@
     </header>
 
     <main>
-    <section class="slideshow-hero">
-        <div class="hero-overlay"></div>
-        <div class="overlay-content">
-            <h1>Quản lý sự kiện từ thiện dễ dàng và hiệu quả</h1>
-            <p>
-                Từ việc tạo sự kiện, ghi nhận đóng góp đến tương tác với người tham gia – tất cả được thực hiện
-                chỉ trong một nền tảng duy nhất. Giao diện thân thiện, dễ sử dụng và minh bạch.
-            </p>
-        </div>
-    </section>
-    <section class="how-it-works">
-    <h2>Quản lý sự kiện từ thiện hoạt động như thế nào?</h2>
-    <div class="steps">
-        <div class="step">
-            <div class="icon-circle">
-                <i class="fas fa-search-dollar"></i>
+        <!-- Hero Section -->
+        <section class="slideshow-hero">
+            <div class="hero-overlay"></div>
+            <div class="overlay-content">
+                <h1>Quản lý sự kiện từ thiện dễ dàng và hiệu quả</h1>
+                <p>
+                    Từ việc tạo sự kiện, ghi nhận đóng góp đến tương tác với người tham gia – tất cả được thực hiện
+                    chỉ trong một nền tảng duy nhất. Giao diện thân thiện, dễ sử dụng và minh bạch.
+                </p>
             </div>
-            <h3>1. Tìm chiến dịch</h3>
-            <p>Tìm kiếm các chiến dịch gây quỹ mà bạn quan tâm</p>
-        </div>
-        <div class="step">
-            <div class="icon-circle">
-                <i class="fas fa-hand-holding-heart"></i>
-            </div>
-            <h3>2. Ủng hộ</h3>
-            <p>Chọn mức ủng hộ và thực hiện thanh toán an toàn</p>
-        </div>
-        <div class="step">
-            <div class="icon-circle">
-                <i class="fas fa-heart"></i>
-            </div>
-            <h3>3. Theo dõi</h3>
-            <p>Nhận cập nhật về tình hình chiến dịch bạn đã ủng hộ</p>
-        </div>
-    </div>
-</section>
-   <section class="stats-section">
-    <div class="stats-container">
-        <!-- Bên trái: mô tả -->
-        <div class="stats-text">
-            <p class="stats-subtitle">TỔNG QUAN SỰ KIỆN</p>
-            <h2>Quản lý sự kiện từ thiện với các chỉ số minh bạch</h2>
-            <p class="stats-description">
-                Theo dõi toàn bộ hoạt động của sự kiện từ thiện: tổng chiến dịch, số tiền đã quyên góp, số người tham gia ủng hộ... tất cả hiển thị rõ ràng, minh bạch trong một màn hình duy nhất.
-            </p>
-            <a href="#" class="stats-button">Xem chi tiết tính năng</a>
-        </div>
+        </section>
 
-        <!-- Bên phải: các chỉ số -->
-        <div class="stats-cards">
-            <div class="stat-card yellow-card">
-                <p class="card-label">CHIẾN DỊCH</p>
-                <p class="card-value">12</p>
-            </div>
-            <div class="stat-card green-card">
-                <p class="card-label">ĐÃ QUYÊN GÓP</p>
-                <p class="card-value">$8,450</p>
-            </div>
-            <div class="stat-card blue-card">
-                <p class="card-label">NGƯỜI ỦNG HỘ</p>
-                <div class="circle-chart">
-                    <span>93%</span>
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <h2>Quản lý sự kiện từ thiện hoạt động như thế nào?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="icon-circle">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h3>1. Tìm chiến dịch</h3>
+                    <p>Tìm kiếm các chiến dịch gây quỹ mà bạn quan tâm</p>
+                </div>
+                <div class="step">
+                    <div class="icon-circle">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>2. Ủng hộ</h3>
+                    <p>Chọn mức ủng hộ và thực hiện thanh toán an toàn</p>
+                </div>
+                <div class="step">
+                    <div class="icon-circle">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>3. Theo dõi</h3>
+                    <p>Nhận cập nhật về tình hình chiến dịch bạn đã ủng hộ</p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-</main>
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-container">
+                <!-- Left Text -->
+                <div class="stats-text">
+                    <p class="stats-subtitle">TỔNG QUAN SỰ KIỆN</p>
+                    <h2>Quản lý sự kiện từ thiện với các chỉ số minh bạch</h2>
+                    <p class="stats-description">
+                        Theo dõi toàn bộ hoạt động của sự kiện từ thiện: tổng chiến dịch, số tiền đã quyên góp,
+                        số người tham gia ủng hộ... tất cả hiển thị rõ ràng, minh bạch trong một màn hình duy nhất.
+                    </p>
+                    <a href="#" class="stats-button">Xem chi tiết tính năng</a>
+                </div>
+
+                <!-- Right Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card yellow-card">
+                        <p class="card-label">CHIẾN DỊCH</p>
+                        <p class="card-value">12</p>
+                    </div>
+                    <div class="stat-card green-card">
+                        <p class="card-label">ĐÃ QUYÊN GÓP</p>
+                        <p class="card-value">$8,450</p>
+                    </div>
+                    <div class="stat-card blue-card">
+                        <p class="card-label">NGƯỜI ỦNG HỘ</p>
+                        <div class="circle-chart"><span>93%</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <div class="footer-container">
@@ -117,40 +117,40 @@
         </div>
     </footer>
 
-   @include('modals.auth-modals')
+    @include('modals.auth-modals')
 
     <script src="{{ asset('js/home.js') }}"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const heroSection = document.querySelector('.slideshow-hero');
-        const backgroundImages = [
-            "{{ asset('img/sukien.jpg') }}",
-            "{{ asset('img/sukien1.jpg') }}"
-        ];
+        document.addEventListener("DOMContentLoaded", function () {
+            const heroSection = document.querySelector('.slideshow-hero');
+            const backgroundImages = [
+                "{{ asset('img/sukien.jpg') }}",
+                "{{ asset('img/sukien1.jpg') }}"
+            ];
 
-        let currentIndex = 0;
+            let currentIndex = 0;
 
-        function updateBackground() {
-            heroSection.style.backgroundImage = `url('${backgroundImages[currentIndex]}')`;
-            currentIndex = (currentIndex + 1) % backgroundImages.length;
-        }
+            function updateBackground() {
+                heroSection.style.backgroundImage = `url('${backgroundImages[currentIndex]}')`;
+                currentIndex = (currentIndex + 1) % backgroundImages.length;
+            }
 
-        updateBackground();
-        setInterval(updateBackground, 5000);
-    });
-// phan 3
-    const cards = document.querySelectorAll('.stat-card');
-  const container = document.querySelector('.stats-cards');
+            updateBackground();
+            setInterval(updateBackground, 5000);
 
-  cards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      container.classList.add('hovered');
-    });
-    card.addEventListener('mouseleave', () => {
-      container.classList.remove('hovered');
-    });
-  });
-</script>
+            // Hover effect for stat cards
+            const cards = document.querySelectorAll('.stat-card');
+            const container = document.querySelector('.stats-cards');
 
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    container.classList.add('hovered');
+                });
+                card.addEventListener('mouseleave', () => {
+                    container.classList.remove('hovered');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
