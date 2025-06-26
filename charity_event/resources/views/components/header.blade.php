@@ -53,15 +53,15 @@
                         </span>
                     </a>
 
-                    <div id="notificationDropdown" class="notification-dropdown" style="display:none;">
+                    <div id="notificationDropdown" class="notification-dropdown">
                         <ul id="notificationList">
                             @if (empty($notifications))
                                 <li><p>Không có thông báo nào.</p></li>
                             @else
                                 @foreach ($notifications as $notif)
-                                    <li class="{{ $notif['seen'] ? '' : 'unread' }}">
-                                        <p>{{ $notif['message'] }}</p>
-                                        <small>{{ \Carbon\Carbon::parse($notif['created_at'])->format('d/m/Y H:i') }}</small>
+                                    <li class="{{ $notif->seen ? '' : 'unread' }}">
+                                        <p>{{ $notif->message }}</p>
+                                        <small>{{ \Carbon\Carbon::parse($notif->created_at)->format('d/m/Y H:i') }}</small>
                                     </li>
                                 @endforeach
                             @endif

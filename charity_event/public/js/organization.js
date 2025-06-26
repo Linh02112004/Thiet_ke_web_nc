@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Hàm thiết lập modal chung
     function setupModal(triggerId, modalId) {
         const trigger = document.getElementById(triggerId);
         const modal = document.getElementById(modalId);
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Thiết lập các modal cụ thể
     setupModal("updateInfoLink", "updateInfoModal");
     setupModal("changePasswordLink", "changePasswordModal");
     setupModal("createEventButton", "createEventModal");
@@ -50,31 +48,40 @@ document.addEventListener("DOMContentLoaded", function () {
     const notificationDropdown = document.getElementById("notificationDropdown");
     const notifBadge = document.getElementById("notif-badge");
 
-    notificationsBtn?.addEventListener("click", function (event) {
-        event.preventDefault();
-        const isVisible = notificationDropdown.style.display === "block";
-        notificationDropdown.style.display = isVisible ? "none" : "block";
+    if (notificationsBtn && notificationDropdown) {
+        notificationsBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            notificationDropdown.classList.toggle('show');
 
-        if (notifBadge && notifBadge.style.display !== "none") {
-            fetch("organization.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: "mark_seen=1"
-            }).then(res => res.text()).then(responseText => {
-                if (responseText === 'success') {
-                    notifBadge.style.display = "none";
-                    document.querySelectorAll(".notification-dropdown ul li.unread")
-                        .forEach(li => li.classList.remove("unread"));
-                }
-            });
-        }
-    });
+            if (notifBadge && notifBadge.style.display !== "none") {
+                fetch(window.orgMarkReadUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: "mark_seen=1"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            notifBadge.style.display = "none";
+                            document.querySelectorAll(".notification-dropdown ul li.unread")
+                                .forEach(li => li.classList.remove("unread"));
+                        }
+                    });
+            }
+        });
 
-    document.addEventListener("click", function (event) {
-        if (!notificationsBtn.contains(event.target) && !notificationDropdown.contains(event.target)) {
-            notificationDropdown.style.display = "none";
-        }
-    });
+        document.addEventListener("click", function (event) {
+            if (
+                !notificationsBtn.contains(event.target) &&
+                !notificationDropdown.contains(event.target)
+            ) {
+                notificationDropdown.style.display = "none";
+            }
+        });
+    }
 });
 
 console.log("JS loaded");

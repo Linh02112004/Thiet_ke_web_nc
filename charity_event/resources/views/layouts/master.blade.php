@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', '🌱 HY VỌNG')</title>
 
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
@@ -32,8 +33,6 @@
     @stack('scripts')
 
     <script src="{{ asset('js/base.js') }}"></script>
-
-    @php $role = Auth::user()->role ?? null; @endphp
     @if ($role === 'admin')
         <script src="{{ asset('js/admin.js') }}"></script>
     @elseif ($role === 'organization')
@@ -41,5 +40,6 @@
     @elseif ($role === 'donor')
         <script src="{{ asset('js/donor.js') }}"></script>
     @endif
+
 </body>
 </html>

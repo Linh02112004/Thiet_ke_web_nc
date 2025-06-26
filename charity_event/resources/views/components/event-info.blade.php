@@ -5,4 +5,4 @@
 <p><strong>Số điện thoại:</strong> {{ $event->phone }}</p>
 <p><strong>Địa điểm sự kiện:</strong> {{ $event->location }}</p>
 <p><strong>Mục tiêu quyên góp:</strong> {{ number_format($event->goal) }} VND</p>
-<p><strong>Số tiền đã quyên góp:</strong> {{ number_format($event->total_donated) }} VND</p>
+<p><strong>Số tiền đã quyên góp:</strong> {{ number_format($event->amount_raised) }} VND</p>

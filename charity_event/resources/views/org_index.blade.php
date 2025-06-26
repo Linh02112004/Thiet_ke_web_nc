@@ -30,5 +30,9 @@
 @endsection
 
 @push('scripts')
+    <script>
+        window.orgMarkReadUrl = "{{ route('organization.notifications.markRead') }}";
+        console.log("notificationDropdown:", notificationDropdown);
+    </script>
     <script src="{{ asset('js/organization.js') }}"></script>
 @endpush

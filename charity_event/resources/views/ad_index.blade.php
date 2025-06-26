@@ -23,5 +23,6 @@
             <p>Không có sự kiện nào.</p>
         @endforelse
     </div>
-
 @endsection
+
+

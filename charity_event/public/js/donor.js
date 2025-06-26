@@ -73,9 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.confirmDonation = function () {
         const amount = document.getElementById("donationAmount").value;
-        const confirmRoute = document.getElementById("donationModal").dataset.confirmRoute;
-        const eventId = document.getElementById("donationModal").dataset.eventId;
-        const csrfToken = document.getElementById("donationModal").dataset.csrf;
+        const modal = document.getElementById("donationModal");
+        const confirmRoute = modal.dataset.confirmRoute;
+        const eventId = modal.dataset.eventId;
+        const csrfToken = modal.dataset.csrf;
 
         fetch(confirmRoute, {
             method: "POST",
@@ -87,8 +88,21 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(res => res.json())
             .then(data => {
-                alert(data.success ? 'Quyên góp thành công!' : 'Thất bại: ' + data.message);
-                if (data.success) location.reload();
+                if (data.success) {
+                    alert(data.message);
+
+                    modal.style.display = "none";
+
+                    document.getElementById("donationAmount").value = "";
+
+                    window.location.reload();
+                } else {
+                    alert("Có lỗi xảy ra. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Donation error:", error);
+                alert("Lỗi máy chủ. Vui lòng thử lại sau.");
             });
     };
 });

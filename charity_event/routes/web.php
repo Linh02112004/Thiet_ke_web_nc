@@ -61,6 +61,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':organization'])
     ->prefix('organization')
     ->group(function () {
         Route::get('/index', [OrganizationController::class, 'index'])->name('org_index');
+        Route::post('/notifications/mark-read', [OrganizationController::class, 'markNotificationsRead'])->name('organization.notifications.markRead');
 
         Route::get('/event/{id}', [OrganizationController::class, 'showEventDetails'])->name('organization.event.details');
         Route::post('/event/create', [OrganizationController::class, 'createEvent'])->name('organization.createEvent');

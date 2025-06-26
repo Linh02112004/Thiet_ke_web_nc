@@ -13,7 +13,7 @@ class DonorController extends Controller
     {
         $user = Auth::user();
 
-        // Cập nhật trạng thái sự kiện nếu đã đạt đủ goal
+        // Cập nhật trạng thái các sự kiện đã đạt đủ goal
         DB::transaction(function () {
             $eventsToComplete = DB::table('events as e')
                 ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
@@ -29,10 +29,10 @@ class DonorController extends Controller
             }
         });
 
-        // Lấy danh sách sự kiện với tổng tiền đã quyên góp
+        // Lấy danh sách sự kiện với tổng số tiền đã quyên góp
         $events = DB::table('events as e')
             ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
-            ->join('users as u', 'e.user_id', '=', 'u.id') // user_id là tổ chức
+            ->join('users as u', 'e.user_id', '=', 'u.id')
             ->select(
                 'e.id as event_id',
                 'e.event_name as name',
@@ -110,12 +110,29 @@ class DonorController extends Controller
     {
         $event = DB::table('events as e')
             ->join('users as u', 'e.user_id', '=', 'u.id')
+            ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
             ->where('e.id', $id)
             ->select(
                 'e.*',
                 'u.organization_name as organizer',
-                DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM donations WHERE event_id = e.id) as total_donated'),
-                DB::raw('(SELECT COUNT(*) FROM donations WHERE event_id = e.id) as donation_count')
+                DB::raw('COALESCE(SUM(d.amount), 0) as amount_raised'),
+                DB::raw('COUNT(d.id) as donation_count')
+            )
+            ->groupBy(
+                'e.id',
+                'e.event_name',
+                'e.description',
+                'e.status',
+                'e.organizer_name',
+                'e.location',
+                'e.goal',
+                'e.phone',
+                'e.bank_account',
+                'e.bank_name',
+                'e.user_id',
+                'e.created_at',
+                'e.updated_at',
+                'u.organization_name'
             )
             ->first();
 
@@ -126,18 +143,18 @@ class DonorController extends Controller
         $donations = DB::table('donations as d')
             ->join('users as u', 'd.donor_id', '=', 'u.id')
             ->where('d.event_id', $id)
-            ->orderBy('d.donated_at', 'desc')
+            ->orderByDesc('d.donated_at')
             ->select('u.full_name as donor_name', 'd.amount', 'd.donated_at')
             ->get();
 
         $comments = DB::table('comments as c')
             ->join('users as u', 'c.user_id', '=', 'u.id')
             ->where('c.event_id', $id)
-            ->orderBy('c.created_at', 'desc')
+            ->orderByDesc('c.created_at')
             ->select(
                 'c.comment',
                 'c.created_at',
-                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END AS commenter_name")
+                DB::raw("CASE WHEN u.role = 'organization' THEN u.organization_name ELSE u.full_name END as commenter_name")
             )
             ->get();
 
@@ -152,10 +169,45 @@ class DonorController extends Controller
         ];
 
         $bankCode = $bankCodes[$event->bank_name] ?? null;
-
         $user = Auth::user();
         $fullName = $user->full_name ?? 'Người dùng';
 
         return view('dn_event-details', compact('event', 'donations', 'comments', 'bankCode', 'fullName'));
+    }
+
+    public function confirmDonation(Request $request)
+    {
+        $request->validate([
+            'event_id' => 'required|integer|exists:events,id',
+            'amount' => 'required|integer|min:1000'
+        ]);
+
+        $user = Auth::user();
+
+        DB::table('donations')->insert([
+            'event_id' => $request->event_id,
+            'donor_id' => $user->id,
+            'amount' => $request->amount,
+            'donated_at' => now()
+        ]);
+
+        $updated = DB::table('events as e')
+            ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
+            ->where('e.id', $request->event_id)
+            ->select(
+                'e.goal',
+                DB::raw('COALESCE(SUM(d.amount), 0) as amount_raised')
+            )
+            ->groupBy('e.id', 'e.goal')
+            ->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Quyên góp thành công!',
+            'data' => [
+                'goal' => $updated->goal,
+                'amount_raised' => $updated->amount_raised
+            ]
+        ]);
     }
 }

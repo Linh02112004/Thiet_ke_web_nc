@@ -78,13 +78,30 @@ class AdminController extends Controller
     public function showEventDetails($id)
     {
         $event = DB::table('events as e')
+            ->leftJoin('donations as d', 'e.id', '=', 'd.event_id')
             ->join('users as u', 'e.user_id', '=', 'u.id')
             ->where('e.id', $id)
             ->select(
                 'e.*',
                 'u.organization_name as organizer',
-                DB::raw('(SELECT COALESCE(SUM(amount), 0) FROM donations WHERE event_id = e.id) as total_donated'),
-                DB::raw('(SELECT COUNT(*) FROM donations WHERE event_id = e.id) as donation_count')
+                DB::raw('COALESCE(SUM(d.amount), 0) as amount_raised'),
+                DB::raw('COUNT(d.id) as donation_count')
+            )
+            ->groupBy(
+                'e.id',
+                'e.event_name',
+                'e.description',
+                'e.status',
+                'e.organizer_name',
+                'e.location',
+                'e.goal',
+                'e.phone',
+                'e.bank_account',
+                'e.bank_name',
+                'e.user_id',
+                'e.created_at',
+                'e.updated_at',
+                'u.organization_name'
             )
             ->first();
 

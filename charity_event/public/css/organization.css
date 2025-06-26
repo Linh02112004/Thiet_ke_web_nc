@@ -28,6 +28,10 @@
     z-index: 1000;
 }
 
+.notification-dropdown.show {
+    display: block;
+}
+
 .notification-dropdown ul {
     list-style: none;
     padding: 0;

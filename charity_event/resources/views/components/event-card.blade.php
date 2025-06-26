@@ -16,7 +16,7 @@
 
 
 <div class="event-card">
-    <h3>
+    <h3 class="event-title">
         @if ($role === 'admin' && isset($event->pending) && $event->pending > 0)
             <span class="warning-icon"><big>❗</big></span>
         @endif
