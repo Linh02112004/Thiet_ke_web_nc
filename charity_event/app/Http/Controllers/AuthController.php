@@ -42,37 +42,40 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = [
-            'email' => $request->loginIdentity,
-            'password' => $request->loginPassword,
-        ];
+        $request->validate([
+            'loginIdentity' => 'required',
+            'loginPassword' => 'required',
+            'loginRole'     => 'required|in:admin,organization,donor',
+        ]);
 
         $user = User::where('email', $request->loginIdentity)
                     ->orWhere('phone', $request->loginIdentity)
                     ->first();
 
         if ($user && Hash::check($request->loginPassword, $user->password_hash)) {
-            Auth::guard('web')->login($user);
-            Log::info('Logged in: '.$user->email.' as '.$user->role);
-
-            switch ($user->role) {
-                case 'admin': 
-                    return redirect()->route('ad_index');
-                case 'organization': 
-                    return redirect()->route('org_index');
-                case 'donor': 
-                    return redirect()->route('dn_index');
+            if ($user->role !== $request->loginRole) {
+                return back()->with('error', 'Tài khoản không thuộc vai trò đã chọn.');
             }
+
+            Auth::guard('web')->login($user);
+            Log::info('Đăng nhập: ' . $user->email . ' với vai trò ' . $user->role);
+
+            return match ($user->role) {
+                'admin'        => redirect()->route('ad_index'),
+                'organization' => redirect()->route('org_index'),
+                'donor'        => redirect()->route('dn_index'),
+                default        => redirect('/'),
+            };
         }
 
-        return back()->with('error', 'Đăng nhập thất bại!');
+        return back()->with('error', 'Email/số điện thoại hoặc mật khẩu không đúng.');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate(); // Xóa session hiện tại
-        $request->session()->regenerateToken(); // Tạo CSRF token mới
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect('/')->with('success', 'Đăng xuất thành công!');
     }
