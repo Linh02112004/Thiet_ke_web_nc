@@ -27,7 +27,3 @@
     @include('modals.update-info')
     @include('modals.change-password')
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/donor.js') }}"></script>
-@endpush

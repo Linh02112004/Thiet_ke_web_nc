@@ -35,7 +35,3 @@
 
 </div>
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/donor.js') }}"></script>
-@endpush

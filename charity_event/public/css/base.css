@@ -60,7 +60,6 @@ header h1 a:hover {
     align-items: center;
     cursor: pointer;
     position: relative;
-    /* Đặt làm gốc cho dropdown */
 }
 
 .arrow {

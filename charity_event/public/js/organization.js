@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 !notificationsBtn.contains(event.target) &&
                 !notificationDropdown.contains(event.target)
             ) {
-                notificationDropdown.style.display = "none";
+                notificationDropdown.classList.remove("show");
             }
         });
     }

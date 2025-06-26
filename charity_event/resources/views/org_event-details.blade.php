@@ -40,11 +40,6 @@
 
     @include('modals.request-edit', ['event' => $event])
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('js/organization.js') }}"></script>
-@endpush
-
 <!-- <script>
 function submitComment() {
     let commentText = document.getElementById("commentText").value.trim();
@@ -71,5 +66,3 @@ function submitComment() {
     .catch(error => console.error("Lỗi khi gửi bình luận:", error));
 }
 </script> -->
-</body>
-</html>

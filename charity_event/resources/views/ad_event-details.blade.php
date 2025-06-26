@@ -42,8 +42,4 @@
 @if ($edit)
     @include('modals.compare-edit', ['event' => $event, 'original' => $original, 'edit' => $edit])
 @endif
-
-@push('scripts')
-    <script src="{{ asset('js/admin.js') }}"></script>
-@endpush
 @endsection
