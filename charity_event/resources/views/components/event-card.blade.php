@@ -11,7 +11,11 @@
         default => '#',
     };
 
-    $buttonText = $role === 'donor' ? 'Quyên góp' : 'Xem';
+    if ($role === 'donor') {
+        $buttonText = ($progress < 100) ? 'Quyên góp' : 'Xem';
+    } else {
+        $buttonText = 'Xem';
+    }
 @endphp
 
 
