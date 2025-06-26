@@ -5,25 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Event extends Model
+class EventEdit extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'event_id',
         'user_id',
         'event_name',
         'description',
         'location',
-        'goal',
         'organizer_name',
         'phone',
-        'bank_account',
-        'bank_name',
+        'goal',
         'status',
+        'reason',
+        'created_at',
     ];
 
-    public function organization()
+    public $timestamps = false;
+
+    public function event()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Event::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
