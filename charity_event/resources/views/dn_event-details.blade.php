@@ -3,6 +3,12 @@
 @section('title', '🌱 HY VỌNG - ' . $event->event_name)
 
 @section('content')
+@php
+    $goal = $event->goal;
+    $raised = $event->amount_raised;
+    $progress = ($goal > 0) ? min(100, ($raised / $goal) * 100) : 0;
+@endphp
+
 <div class="container">
     <h1>{{ $event->event_name }}</h1>
     <div class="content-wrapper">
@@ -22,7 +28,10 @@
             <div class="right-top">
                 @include('components.progress-bar')
 
-                <button class="btn btn-donate" id="donateButton" onclick="showModal()">Quyên góp</button>
+                @if ($progress < 100)
+                    <button class="btn btn-donate" id="donateButton" onclick="showModal()">Quyên góp</button>
+                @endif
+
             </div>
 
             <div class="right-bottom">
