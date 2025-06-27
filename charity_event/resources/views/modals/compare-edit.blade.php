@@ -5,7 +5,11 @@
         <table border="1">
             <tr><th>Trường</th><th>Dữ liệu cũ</th><th>Dữ liệu mới</th></tr>
             <tr><td>Tên sự kiện</td><td>{{ $original->event_name }}</td><td>{{ $edit->event_name }}</td></tr>
-            <tr><td>Mô tả</td><td>{!! nl2br(e($original->description)) !!}</td><td>{!! nl2br(e($edit->description)) !!}</td></tr>
+            <tr>
+                <td>Mô tả</td>
+                <td><div class="cell-content">{!! nl2br(e($original->description)) !!}</div></td>
+                <td><div class="cell-content">{!! nl2br(e($edit->description)) !!}</div></td>
+            </tr>
             <tr><td>Địa điểm</td><td>{{ $original->location }}</td><td>{{ $edit->location }}</td></tr>
             <tr><td>Mục tiêu</td><td>{{ number_format($original->goal) }} VND</td><td>{{ number_format($edit->goal) }} VND</td></tr>
             <tr><td>Người phụ trách</td><td>{{ $original->organizer_name }}</td><td>{{ $edit->organizer_name }}</td></tr>

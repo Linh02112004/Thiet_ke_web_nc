@@ -45,6 +45,17 @@
     min-width: 80px;
 }
 
+.cell-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    max-height: calc(1.5em * 7);
+}
+
+
 #compareModal th:nth-child(2),
 #compareModal td:nth-child(2),
 #compareModal th:nth-child(3),
