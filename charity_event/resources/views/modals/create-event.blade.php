@@ -6,7 +6,6 @@
             <form action="{{ route('organization.createEvent') }}" method="POST">
                 @csrf
                 <div class="form-container">
-                    <!-- Thông tin Sự kiện -->
                     <div class="form-section">
                         <h2>Thông tin Sự kiện</h2>
                         <label for="event_name">Tên sự kiện:</label>
@@ -22,7 +21,6 @@
                         <textarea id="description" name="description" required></textarea>
                     </div>
 
-                    <!-- Thông tin Người phụ trách -->
                     <div class="form-section">
                         <h2>Thông tin Người phụ trách</h2>
                         <label for="organizer_name">Họ tên:</label>

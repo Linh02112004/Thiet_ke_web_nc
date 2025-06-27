@@ -6,7 +6,7 @@
     data-csrf="{{ csrf_token() }}">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h3>Nhập số tiền muốn quyên góp</h3>
+        <h2>Nhập số tiền muốn quyên góp</h2>
         <div class="donation-input-group">
             <input type="number" id="donationAmount" placeholder="Nhập số tiền (VNĐ)" min="1000">
             <button class="btn btn-donate" onclick="generateVietQR()">Tạo QR</button>

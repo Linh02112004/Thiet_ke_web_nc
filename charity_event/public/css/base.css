@@ -405,41 +405,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Nội dung modal căn giữa */
-#editEventModal .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#editEventModal form {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    text-align: left;
-}
-
-#editEventModal form label {
-    font-weight: bold;
-}
-
-#editEventModal form input,
-#editEventModal form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 .close {
     position: absolute;
     top: 10px;
@@ -599,6 +564,7 @@ hr {
 #updateInfoModal,
 #changePasswordModal {
     display: none;
+    /* mặc định ẩn */
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -609,21 +575,22 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 #updateInfoModal .modal-content,
 #changePasswordModal .modal-content {
     background-color: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
-    text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    max-height: 80vh;
+    overflow-y: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
 }
 
 #changePasswordModal .modal-content {
@@ -633,7 +600,9 @@ hr {
 #updateInfoModal h1,
 #changePasswordModal h1 {
     color: #007BFF;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-align: center;
 }
 
 #updateInfoModal .form-container,
@@ -647,22 +616,24 @@ hr {
 #updateInfoModal label,
 #changePasswordModal label {
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 #updateInfoModal input,
 #changePasswordModal input {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
+    font-size: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 #updateInfoModal button,
 #changePasswordModal button {
     width: fit-content;
-    padding: 10px;
-    margin: 15px auto 0;
+    padding: 10px 20px;
+    margin: 20px auto 0;
     background-color: #007BFF;
     color: white;
     border: none;
@@ -676,21 +647,4 @@ hr {
 #updateInfoModal button:hover,
 #changePasswordModal button:hover {
     background-color: #0056b3;
-}
-
-#updateInfoModal .close,
-#changePasswordModal .close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    color: #555;
-    transition: color 0.3s;
-}
-
-#updateInfoModal .close:hover,
-#changePasswordModal .close:hover {
-    color: #ff6600;
 }

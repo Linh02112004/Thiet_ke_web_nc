@@ -9,15 +9,17 @@
         <div class="container-left">
             <hr>
             @include('components.event-info')
+            <div class="button-group">
+                @if ($event->donation_count == 0)
+                    <form method="POST" action="{{ route('admin.event.delete', ['id' => $event->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Xóa sự kiện</button>
+                    </form>
+                @endif
+                <button onclick="openModal('compareModal')">So sánh thay đổi</button>
+            </div>
 
-            @if ($event->donation_count == 0)
-                <form method="POST" action="{{ route('admin.event.delete', ['id' => $event->id]) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Xóa sự kiện</button>
-                </form>
-            @endif
-            <button onclick="openModal('compareModal')">So sánh thay đổi</button>
 
             <hr>
             <h3>Bình luận</h3>

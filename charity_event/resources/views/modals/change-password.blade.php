@@ -5,7 +5,7 @@
 <div id="changePasswordModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal('changePasswordModal')">&times;</span>
-        <h1>Thay đổi mật khẩu</h1>
+        <h2>Thay đổi mật khẩu</h2>
 
         <form action="{{ $role === 'organization' ? route('organization.changePassword') : route('donor.changePassword') }}" method="POST">
             @csrf

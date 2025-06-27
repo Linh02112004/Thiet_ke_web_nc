@@ -6,7 +6,7 @@
 <div id="updateInfoModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close" onclick="closeModal('updateInfoModal')">&times;</span>
-        <h1>Cập nhật thông tin{{ $role === 'organization' ? ' Tổ chức' : '' }}</h1>
+        <h2>Cập nhật thông tin{{ $role === 'organization' ? ' Tổ chức' : '' }}</h2>
 
         <form action="{{ $role === 'organization' ? route('organization.updateInfo') : route('donor.updateInfo') }}" method="POST">
             @csrf
